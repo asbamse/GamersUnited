@@ -18,7 +18,10 @@ namespace GamersUnited.Infrastructure.Data
 
         public ProductCategory Add(ProductCategory obj)
         {
-            throw new NotImplementedException();
+            ProductCategory item = _ctx.ProductCategory.Add(obj).Entity;
+            _ctx.SaveChanges();
+
+            return item;
         }
 
         public int Count()

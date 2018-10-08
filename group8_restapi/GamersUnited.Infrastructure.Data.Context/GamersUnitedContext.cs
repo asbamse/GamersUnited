@@ -20,7 +20,8 @@ namespace GamersUnited.Infrastructure.Data.Context
             modelBuilder.Entity<Game>()
                 .HasOne<Product>(g => g.Product)
                 .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasForeignKey<Product>(p => p.Id);
 
             modelBuilder.Entity<Game>()
                 .HasOne<GameGenre>(g => g.Genre)
@@ -30,12 +31,14 @@ namespace GamersUnited.Infrastructure.Data.Context
             modelBuilder.Entity<Stock>()
                 .HasOne<Product>(s => s.Product)
                 .WithOne()
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey<Product>(p => p.Id);
 
             modelBuilder.Entity<Sold>()
                 .HasOne<Product>(s => s.Product)
                 .WithOne()
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey<Product>(p => p.Id);
 
             modelBuilder.Entity<SoldInvoiceRelation>().HasKey(si => new { si.SoldId, si.InvoiceId });
 

@@ -9,7 +9,7 @@ using Xunit;
 
 namespace XUnitTestCore.Infrastructure.Data
 {
-    public class ProductCategoryTest
+    public class ProductCategoryRepositoryTest
     {
         [Theory]
         [InlineData(1, "Testing category")]

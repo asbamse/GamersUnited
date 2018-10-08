@@ -44,17 +44,40 @@ namespace GamersUnited.Infrastructure.Data
 
         public ProductCategory GetById(int id)
         {
-            throw new NotImplementedException();
+            var item = _ctx.ProductCategory.FirstOrDefault(b => b.Id == id);
+
+            if (item == null)
+            {
+                throw new ArgumentOutOfRangeException("Id not found!");
+            }
+
+            return item;
         }
 
         public ProductCategory Remove(ProductCategory obj)
         {
-            throw new NotImplementedException();
+            var item = GetById(obj.Id);
+
+            _ctx.ProductCategory.Remove(item);
+            _ctx.SaveChanges();
+
+            return item;
         }
 
         public ProductCategory Update(int id, ProductCategory obj)
         {
-            throw new NotImplementedException();
+            if (obj.Name == null)
+            {
+                throw new ArgumentNullException("The name cannot be null");
+            }
+
+            var item = GetById(id);
+            item.Name = obj.Name;
+
+            _ctx.ProductCategory.Update(item);
+            _ctx.SaveChanges();
+
+            return item;
         }
     }
 }

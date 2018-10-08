@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GamersUnited.Core.Entities\GamersUnited.Core.Entities.csproj" />
+    <ProjectReference Include="..\GamersUnited.Core\GamersUnited.Core.csproj" />
+    <ProjectReference Include="..\GamersUnited.Infrastructure.Data.Context\GamersUnited.Infrastructure.Data.Context.csproj" />
+  </ItemGroup>
+
 </Project>

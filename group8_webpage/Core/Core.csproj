@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="Entity\" />
     <Folder Include="ApplicationService\" />
-    <Folder Include="DomainService\" />
   </ItemGroup>
 
 </Project>

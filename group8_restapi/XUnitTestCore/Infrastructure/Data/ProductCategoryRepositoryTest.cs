@@ -77,5 +77,32 @@ namespace XUnitTestCore.Infrastructure.Data
                 });
             }
         }
+
+        [Fact]
+        public void CountOneProductCategoryTest()
+        {
+            var pc = new ProductCategory() { Name="" };
+
+            using (var context = new GamersUnitedContext(_options))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductCategoryRepository(context);
+                repo.Add(pc);
+                Assert.Equal(1, repo.Count());
+            }
+        }
+
+        [Fact]
+        public void CountNoProductCategoryTest()
+        {
+            using (var context = new GamersUnitedContext(_options))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductCategoryRepository(context);
+                Assert.Equal(0, repo.Count());
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ using GamersUnited.Core.Entities;
 using GamersUnited.Infrastructure.Data.Context;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GamersUnited.Infrastructure.Data
@@ -33,7 +34,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public int Count()
         {
-            throw new NotImplementedException();
+            return _ctx.ProductCategory.Count();
         }
 
         public IList<ProductCategory> GetAll()

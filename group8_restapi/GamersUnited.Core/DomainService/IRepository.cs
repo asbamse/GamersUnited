@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Core.DomainService
+namespace GamersUnited.Core.DomainService
 {
     public interface IRepository<T>
     {

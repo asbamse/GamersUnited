@@ -4,8 +4,8 @@
     "windowsAuthentication": false, 
     "anonymousAuthentication": true, 
     "iisExpress": {
-      "applicationUrl": "http://localhost:50826",
-      "sslPort": 44346
+      "applicationUrl": "http://localhost:64220",
+      "sslPort": 44353
     }
   },
   "profiles": {
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "restapi": {
+    "GamersUnited.RestAPI": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",

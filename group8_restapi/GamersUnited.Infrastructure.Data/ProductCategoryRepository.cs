@@ -39,7 +39,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public IList<ProductCategory> GetAll()
         {
-            throw new NotImplementedException();
+            return _ctx.ProductCategory.ToList();
         }
 
         public ProductCategory GetById(int id)

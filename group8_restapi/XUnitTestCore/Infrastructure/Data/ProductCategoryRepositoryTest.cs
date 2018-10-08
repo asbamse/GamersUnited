@@ -4,6 +4,7 @@ using GamersUnited.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -102,6 +103,49 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 var repo = new ProductCategoryRepository(context);
                 Assert.Equal(0, repo.Count());
+            }
+        }
+
+        [Fact]
+        public void GetAllProductCategoryTest()
+        {
+            var pcl = new List<ProductCategory>{
+                new ProductCategory() { Name = "1" },
+                new ProductCategory() { Name = "2" },
+                new ProductCategory() { Name = "3" },
+                new ProductCategory() { Name = "4" },
+                new ProductCategory() { Name = "5" }
+            };
+
+            using (var context = new GamersUnitedContext(_options))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductCategoryRepository(context);
+                for (int i = 0; i < pcl.Count; i++)
+                {
+                    repo.Add(pcl[i]);
+                }
+
+                var npcl = repo.GetAll();
+                for (int i = 0; i < pcl.Count; i++)
+                {
+                    Assert.Equal(pcl[i].Name, npcl[i].Name);
+                }
+
+                Assert.Equal(5, context.ProductCategory.Count());
+            }
+        }
+
+        [Fact]
+        public void GetAllEmptyProductCategoryTest()
+        {
+            using (var context = new GamersUnitedContext(_options))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductCategoryRepository(context);
+                Assert.Equal(0, context.ProductCategory.Count());
             }
         }
     }

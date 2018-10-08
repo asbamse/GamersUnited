@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GamersUnited.Core.Entities
 {
-    class Game
+    public class Game
     {
         public int Id { get; set; }
         public Product Product { get; set; }

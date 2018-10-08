@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GamersUnited.Core.Entities
 {
-    class Invoice
+    public class Invoice
     {
         public int Id { get; set; }
         public Sold Product { get; set; }

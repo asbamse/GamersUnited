@@ -17,7 +17,7 @@ namespace XUnitTestCore.Infrastructure.Data
             .Options;
 
         [Fact]
-        public void CreateValidProductCategoryTest()
+        public void CreateValidProductCategoryRepositoryTest()
         {
             var pc1 = new ProductCategory() { Id = 1, Name = "Testing category" };
             var pc2 = new ProductCategory() { Id = 2, Name = "category" };
@@ -46,7 +46,7 @@ namespace XUnitTestCore.Infrastructure.Data
         }
 
         [Fact]
-        public void CreateInvalidProductCategoryTestAutoincrement()
+        public void CreateInvalidProductCategoryRepositoryTestAutoincrement()
         {
             var pc = new ProductCategory() { Id = 9999, Name = "" };
 
@@ -63,7 +63,7 @@ namespace XUnitTestCore.Infrastructure.Data
         }
 
         [Fact]
-        public void CreateInvalidProductCategoryTestExpectArgumentNullException()
+        public void CreateInvalidProductCategoryRepositoryTestExpectArgumentNullException()
         {
             var pc = new ProductCategory() { Id = 1 };
 
@@ -80,7 +80,7 @@ namespace XUnitTestCore.Infrastructure.Data
         }
 
         [Fact]
-        public void CountOneProductCategoryTest()
+        public void CountOneProductCategoryRepositoryTest()
         {
             var pc = new ProductCategory() { Name="" };
 
@@ -95,7 +95,7 @@ namespace XUnitTestCore.Infrastructure.Data
         }
 
         [Fact]
-        public void CountNoProductCategoryTest()
+        public void CountNoProductCategoryRepositoryTest()
         {
             using (var context = new GamersUnitedContext(_options))
             {
@@ -107,7 +107,7 @@ namespace XUnitTestCore.Infrastructure.Data
         }
 
         [Fact]
-        public void GetAllProductCategoryTest()
+        public void GetAllProductCategoryRepositoryTest()
         {
             var pcl = new List<ProductCategory>{
                 new ProductCategory() { Name = "1" },
@@ -138,7 +138,7 @@ namespace XUnitTestCore.Infrastructure.Data
         }
 
         [Fact]
-        public void GetAllEmptyProductCategoryTest()
+        public void GetAllEmptyProductCategoryRepositoryTest()
         {
             using (var context = new GamersUnitedContext(_options))
             {

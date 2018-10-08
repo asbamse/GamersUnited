@@ -18,7 +18,14 @@ namespace GamersUnited.Infrastructure.Data
 
         public ProductCategory Add(ProductCategory obj)
         {
-            ProductCategory item = _ctx.ProductCategory.Add(obj).Entity;
+            if(obj.Name == null)
+            {
+                throw new ArgumentNullException("The name cannot be null");
+            }
+
+            var tmp = new ProductCategory { Name = obj.Name };
+
+            ProductCategory item = _ctx.ProductCategory.Add(tmp).Entity;
             _ctx.SaveChanges();
 
             return item;

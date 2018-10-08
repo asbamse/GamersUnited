@@ -11,32 +11,70 @@ namespace XUnitTestCore.Infrastructure.Data
 {
     public class ProductCategoryRepositoryTest
     {
-        [Theory]
-        [InlineData(1, "Testing category")]
-        [InlineData(2, "category")]
-        [InlineData(3, "Testing")]
-        public void CreateValidProductCategoryTest(int id, string name)
-        {
-            var options = new DbContextOptionsBuilder<GamersUnitedContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-                .Options;
+        private readonly DbContextOptions<GamersUnitedContext> _options = new DbContextOptionsBuilder<GamersUnitedContext>()
+            .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+            .Options;
 
-            var pc = new ProductCategory() { Id = id, Name = name };
+        [Fact]
+        public void CreateValidProductCategoryTest()
+        {
+            var pc1 = new ProductCategory() { Id = 1, Name = "Testing category" };
+            var pc2 = new ProductCategory() { Id = 2, Name = "category" };
+            var pc3 = new ProductCategory() { Id = 3, Name = "Testing" };
 
             // Run the test against one instance of the context
-            using (var context = new GamersUnitedContext(options))
+            using (var context = new GamersUnitedContext(_options))
             {
-                var repo = new ProductCategoryRepository(context);
-                repo.Add(pc);
-            }
-
-            // Use a separate instance of the context to verify correct data was saved to database
-            using (var context = new GamersUnitedContext(options))
-            {
-                Assert.Equal(1, context.ProductCategory.Count());
-                Assert.Equal(id, context.ProductCategory.Single().Id);
-                Assert.Equal(name, context.ProductCategory.Single().Name);
                 context.Database.EnsureDeleted();
+
+                var repo = new ProductCategoryRepository(context);
+
+                var npc1 = repo.Add(pc1);
+                Assert.Equal(1, context.ProductCategory.Count());
+
+                var npc2 = repo.Add(pc2);
+                Assert.Equal(2, context.ProductCategory.Count());
+
+                var npc3 = repo.Add(pc3);
+                Assert.Equal(3, context.ProductCategory.Count());
+                
+                Assert.Equal(pc1.Name, npc1.Name);
+                Assert.Equal(pc2.Name, npc2.Name);
+                Assert.Equal(pc3.Name, npc3.Name);
+            }
+        }
+
+        [Fact]
+        public void CreateInvalidProductCategoryTestAutoincrement()
+        {
+            var pc = new ProductCategory() { Id = 9999, Name = "" };
+
+            // Run the test against one instance of the context
+            using (var context = new GamersUnitedContext(_options))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductCategoryRepository(context);
+                var npc = repo.Add(pc);
+                
+                Assert.NotEqual(pc.Id, npc.Id);
+            }
+        }
+
+        [Fact]
+        public void CreateInvalidProductCategoryTestExpectArgumentNullException()
+        {
+            var pc = new ProductCategory() { Id = 1 };
+
+            using (var context = new GamersUnitedContext(_options))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductCategoryRepository(context);
+                Assert.Throws<ArgumentNullException>(() =>
+                {
+                    repo.Add(pc);
+                });
             }
         }
     }

@@ -12,6 +12,9 @@ namespace GamersUnited.Infrastructure.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ProductCategory>()
+                .HasKey(pc => pc.Id);
+
             modelBuilder.Entity<Product>()
                 .HasOne<ProductCategory>(p => p.Category)
                 .WithMany()

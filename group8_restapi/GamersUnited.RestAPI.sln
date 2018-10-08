@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamersUnited.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamersUnited.Infrastructure.Data.Context", "GamersUnited.Infrastructure.Data.Context\GamersUnited.Infrastructure.Data.Context.csproj", "{C04085D7-6A14-4D31-9CBB-8CBF1E62D082}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{49EA7262-0459-4756-BA28-7DB5748AA362}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestCore", "XUnitTestCore\XUnitTestCore.csproj", "{5D30F610-C982-4BC1-ADF7-820FE9993BB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,10 @@ Global
 		{C04085D7-6A14-4D31-9CBB-8CBF1E62D082}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C04085D7-6A14-4D31-9CBB-8CBF1E62D082}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C04085D7-6A14-4D31-9CBB-8CBF1E62D082}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D30F610-C982-4BC1-ADF7-820FE9993BB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D30F610-C982-4BC1-ADF7-820FE9993BB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D30F610-C982-4BC1-ADF7-820FE9993BB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D30F610-C982-4BC1-ADF7-820FE9993BB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +63,7 @@ Global
 		{27762672-F686-4278-B32F-AE0646190487} = {FDCB17DF-4A32-4405-8DBA-CAB9288FB46E}
 		{08D045EB-3949-44AB-8F4F-140346AF318C} = {271191BD-D2C6-4E57-B4C3-9CD6F436E140}
 		{C04085D7-6A14-4D31-9CBB-8CBF1E62D082} = {271191BD-D2C6-4E57-B4C3-9CD6F436E140}
+		{5D30F610-C982-4BC1-ADF7-820FE9993BB5} = {49EA7262-0459-4756-BA28-7DB5748AA362}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {824212A2-8C4A-4DC9-B24B-92D7AE9FB5DE}

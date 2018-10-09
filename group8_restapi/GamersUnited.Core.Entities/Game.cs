@@ -4,10 +4,9 @@ using System.Text;
 
 namespace GamersUnited.Core.Entities
 {
-    public class Game
+    public class Game : Product
     {
-        public int Id { get; set; }
-        public Product Product { get; set; }
+        public int ProductId { get; set; }
         public GameGenre Genre { get; set; }
     }
 }

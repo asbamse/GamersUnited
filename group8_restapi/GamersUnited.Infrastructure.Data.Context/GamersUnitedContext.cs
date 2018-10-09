@@ -6,6 +6,15 @@ namespace GamersUnited.Infrastructure.Data.Context
 {
     public class GamersUnitedContext : DbContext
     {
+        public DbSet<ProductCategory> ProductCategory { get; set; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<GameGenre> GameGenre { get; set; }
+        public DbSet<Game> Game { get; set; }
+        public DbSet<Stock> Stock { get; set; }
+        public DbSet<Sold> Sold { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Invoice> Invoice { get; set; }
+
         public GamersUnitedContext(DbContextOptions<GamersUnitedContext> options) : base(options)
         {
         }
@@ -19,12 +28,6 @@ namespace GamersUnited.Infrastructure.Data.Context
                 .HasOne<ProductCategory>(p => p.Category)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Game>()
-                .HasOne<Product>(g => g.Product)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasForeignKey<Product>(p => p.Id);
 
             modelBuilder.Entity<Game>()
                 .HasOne<GameGenre>(g => g.Genre)
@@ -57,14 +60,5 @@ namespace GamersUnited.Infrastructure.Data.Context
                 .HasForeignKey(si => si.InvoiceId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
-
-        public DbSet<ProductCategory> ProductCategory { get; set; }
-        public DbSet<Product> Product { get; set; }
-        public DbSet<GameGenre> GameGenre { get; set; }
-        public DbSet<Game> Game { get; set; }
-        public DbSet<Stock> Stock { get; set; }
-        public DbSet<Sold> Sold { get; set; }
-        public DbSet<User> User { get; set; }
-        public DbSet<Invoice> Invoice { get; set; }
     }
 }

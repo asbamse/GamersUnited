@@ -8,6 +8,6 @@ namespace GamersUnited.Core.Entities
     {
         public int Id { get; set; }
         public Product Product { get; set; }
-        public string cdKey { get; set; }
+        public string CDKey { get; set; }
     }
 }

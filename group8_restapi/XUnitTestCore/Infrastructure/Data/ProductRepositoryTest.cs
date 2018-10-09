@@ -235,6 +235,47 @@ namespace XUnitTestCore.Infrastructure.Data
             }
         }
         #endregion
+        
+        #region Count
+        [Fact]
+        public void CountOneProductCategoryRepositoryTest()
+        {
+            var p = new Product()
+            {
+                Id = 1,
+                Name = "Testing product",
+                Category = new ProductCategory()
+                {
+                    Id = 1,
+                    Name = "Testing category"
+                },
+                Price = 200.0,
+                ImageUrl = "Test URL",
+                Description = "This is a description"
+            };
+
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+                repo.Add(p);
+                Assert.Equal(1, repo.Count());
+            }
+        }
+
+        [Fact]
+        public void CountNoProductCategoryRepositoryTest()
+        {
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+                Assert.Equal(0, repo.Count());
+            }
+        }
+        #endregion
 
         private DbContextOptions<GamersUnitedContext> GetOption(string databasename)
         {

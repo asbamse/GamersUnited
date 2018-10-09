@@ -75,12 +75,24 @@ namespace GamersUnited.Infrastructure.Data
 
         public Product GetById(int id)
         {
-            throw new NotImplementedException();
+            var item = _ctx.Product.FirstOrDefault(b => b.Id == id);
+
+            if (item == null)
+            {
+                throw new ArgumentOutOfRangeException("Id not found!");
+            }
+
+            return item;
         }
 
         public Product Remove(Product obj)
         {
-            throw new NotImplementedException();
+            var item = GetById(obj.Id);
+
+            _ctx.Product.Remove(item);
+            _ctx.SaveChanges();
+
+            return item;
         }
 
         public Product Update(int id, Product obj)

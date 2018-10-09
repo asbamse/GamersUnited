@@ -364,6 +364,134 @@ namespace XUnitTestCore.Infrastructure.Data
         }
         #endregion
 
+        #region GetById
+        [Fact]
+        public void GetValidIdProductRepositoryTest()
+        {
+            var p = new Product()
+            {
+                Id = 1,
+                Name = "1",
+                Category = new ProductCategory()
+                {
+                    Id = 1,
+                    Name = "Testing category"
+                },
+                Price = 200.0,
+                ImageUrl = "Test URL",
+                Description = "This is a description"
+            };
+
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+                var np = repo.Add(p);
+
+                var get = repo.GetById(np.Id);
+
+                Assert.Equal(np.Id, get.Id);
+                Assert.Equal(p.Name, get.Name);
+            }
+        }
+
+        [Fact]
+        public void GetInvalidIdProductRepositoryTest()
+        {
+            var p = new Product()
+            {
+                Id = 1,
+                Name = "1",
+                Category = new ProductCategory()
+                {
+                    Id = 1,
+                    Name = "Testing category"
+                },
+                Price = 200.0,
+                ImageUrl = "Test URL",
+                Description = "This is a description"
+            };
+
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+                var np = repo.Add(p);
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => {
+                    var get = repo.GetById(context.Product.Count());
+                });
+            }
+        }
+        #endregion
+
+        #region Remove
+        [Fact]
+        public void RemoveValidIdProductRepositoryTest()
+        {
+            var p = new Product()
+            {
+                Id = 1,
+                Name = "1",
+                Category = new ProductCategory()
+                {
+                    Id = 1,
+                    Name = "Testing category"
+                },
+                Price = 200.0,
+                ImageUrl = "Test URL",
+                Description = "This is a description"
+            };
+
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+                var np = repo.Add(p);
+                
+                var get = repo.Remove(np);
+
+                Assert.Equal(np.Id, get.Id);
+                Assert.Equal(p.Name, get.Name);
+                Assert.Equal(0, context.Product.Count());
+            }
+        }
+
+        [Fact]
+        public void RemoveInvalidIdProductCategoryRepositoryTest()
+        {
+            var p = new Product()
+            {
+                Id = 1,
+                Name = "1",
+                Category = new ProductCategory()
+                {
+                    Id = 1,
+                    Name = "Testing category"
+                },
+                Price = 200.0,
+                ImageUrl = "Test URL",
+                Description = "This is a description"
+            };
+
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+                var np = repo.Add(p);
+                p.Id = np.Id++;
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => {
+                    var get = repo.Remove(p);
+                });
+            }
+        }
+        #endregion
+
         private DbContextOptions<GamersUnitedContext> GetOption(string databasename)
         {
             return new DbContextOptionsBuilder<GamersUnitedContext>()

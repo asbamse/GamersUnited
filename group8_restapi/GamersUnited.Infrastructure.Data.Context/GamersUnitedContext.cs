@@ -30,6 +30,12 @@ namespace GamersUnited.Infrastructure.Data.Context
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Game>()
+                .HasOne<Product>(g => g.Product)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasForeignKey<Product>(p => p.Id);
+
+            modelBuilder.Entity<Game>()
                 .HasOne<GameGenre>(g => g.Genre)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);

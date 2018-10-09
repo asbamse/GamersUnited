@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamersUnited.Core.Entities"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamersUnited.Infrastructure.Data", "GamersUnited.Infrastructure.Data\GamersUnited.Infrastructure.Data.csproj", "{08D045EB-3949-44AB-8F4F-140346AF318C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamersUnited.Infrastructure.Data.Context", "GamersUnited.Infrastructure.Data.Context\GamersUnited.Infrastructure.Data.Context.csproj", "{C04085D7-6A14-4D31-9CBB-8CBF1E62D082}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamersUnited.Infrastructure.Data.Context", "GamersUnited.Infrastructure.Data.Context\GamersUnited.Infrastructure.Data.Context.csproj", "{C04085D7-6A14-4D31-9CBB-8CBF1E62D082}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{49EA7262-0459-4756-BA28-7DB5748AA362}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestCore", "XUnitTestCore\XUnitTestCore.csproj", "{5D30F610-C982-4BC1-ADF7-820FE9993BB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestCore", "XUnitTestCore\XUnitTestCore.csproj", "{5D30F610-C982-4BC1-ADF7-820FE9993BB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

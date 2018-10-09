@@ -11,22 +11,22 @@ namespace GamersUnited.RestAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GamesController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private IGameService _gameService;
+        private readonly IUserService _userService;
 
-        public GamesController(IGameService gameService)
+        public UsersController(IUserService userService)
         {
-            _gameService = gameService;
+            _userService = userService;
         }
 
-        // GET: api/Games
+        // GET: api/Users
         [HttpGet]
-        public ActionResult<IEnumerable<Game>> Get()
+        public ActionResult<IEnumerable<User>> Get()
         {
             try
             {
-                return Ok(_gameService.GetGames().AsEnumerable());
+                return Ok(_userService.GetAll().AsEnumerable());
             }
             catch (Exception e)
             {
@@ -34,13 +34,13 @@ namespace GamersUnited.RestAPI.Controllers
             }
         }
 
-        // GET: api/Games/5
+        // GET: api/Users/5
         [HttpGet("{id}")]
-        public ActionResult<Game> Get(int id)
+        public ActionResult<User> Get(int id)
         {
             try
             {
-                return Ok(_gameService.GetGameById(id));
+                return Ok(_userService.GetById(id));
             }
             catch (Exception e)
             {
@@ -48,13 +48,13 @@ namespace GamersUnited.RestAPI.Controllers
             }
         }
 
-        // POST: api/Games
+        // POST: api/Users
         [HttpPost]
-        public ActionResult<Game> Post([FromBody] Game game)
+        public ActionResult<User> Post([FromBody] User user)
         {
             try
             {
-                return Ok(_gameService.AddGame(game));
+                return Ok(_userService.Add(user));
             }
             catch (Exception e)
             {
@@ -62,13 +62,13 @@ namespace GamersUnited.RestAPI.Controllers
             }
         }
 
-        // PUT: api/Games/5
+        // PUT: api/Users/5
         [HttpPut("{id}")]
-        public ActionResult<Game> Put(int id, [FromBody] Game game)
+        public ActionResult<User> Put(int id, [FromBody] User user)
         {
             try
             {
-                return Ok(_gameService.UpdateGame(id, game));
+                return Ok(_userService.Update(id, user));
             }
             catch (Exception e)
             {
@@ -78,11 +78,11 @@ namespace GamersUnited.RestAPI.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public ActionResult<Game> Delete(int id)
+        public ActionResult<User> Delete(int id)
         {
             try
             {
-                return Ok(_gameService.RemoveGame(new Game() { Id = id }));
+                return Ok(_userService.Remove(new User() { Id=id }));
             }
             catch (Exception e)
             {

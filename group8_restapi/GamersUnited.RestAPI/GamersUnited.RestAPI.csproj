@@ -14,7 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GamersUnited.Core.Entities\GamersUnited.Core.Entities.csproj" />
     <ProjectReference Include="..\GamersUnited.Core\GamersUnited.Core.csproj" />
+    <ProjectReference Include="..\GamersUnited.Infrastructure.Data.Context\GamersUnited.Infrastructure.Data.Context.csproj" />
+    <ProjectReference Include="..\GamersUnited.Infrastructure.Data\GamersUnited.Infrastructure.Data.csproj" />
   </ItemGroup>
 
 </Project>

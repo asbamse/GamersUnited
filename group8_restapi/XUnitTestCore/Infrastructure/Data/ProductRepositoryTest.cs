@@ -38,6 +38,18 @@ namespace XUnitTestCore.Infrastructure.Data
                 }
             });
             mockProductCategoryRepo.Setup(x => x.GetAll()).Returns(() => new List<ProductCategory>(productCategories.Values));
+            mockProductCategoryRepo.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ProductCategory>())).Returns<int, ProductCategory>((id, pc) =>
+            {
+                if (productCategories.ContainsKey(id))
+                {
+                    productCategories[id] = pc;
+                    return productCategories[id];
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException("Element not found!");
+                }
+            });
         }
 
         #region Add
@@ -487,6 +499,152 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 Assert.Throws<ArgumentOutOfRangeException>(() => {
                     var get = repo.Remove(p);
+                });
+            }
+        }
+        #endregion
+
+        #region Update
+        [Fact]
+        public void UpdateValidProductCategoryRepositoryTest()
+        {
+            var p = new Product()
+            {
+                Id = 1,
+                Name = "Testing product",
+                Category = new ProductCategory()
+                {
+                    Id = 1,
+                    Name = "Testing category"
+                },
+                Price = 200.0,
+                ImageUrl = "Test URL",
+                Description = "This is a description"
+            };
+
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+
+                var ip = repo.Add(p);
+                Assert.Equal(1, context.Product.Count());
+                var tmp = new Product()
+                {
+                    Id = 1,
+                    Name = "Testing monkey",
+                    Category = new ProductCategory()
+                    {
+                        Name = "monkey category"
+                    },
+                    Price = 100.0,
+                    ImageUrl = "Test monkey",
+                    Description = "This is a monkey"
+                };
+                var np = repo.Update(ip.Id, tmp);
+
+                Assert.Equal(ip.Id, np.Id);
+
+                Assert.Equal(tmp.Name, np.Name);
+                Assert.Equal(tmp.Category, np.Category);
+                Assert.Equal(tmp.Price, np.Price);
+                Assert.Equal(tmp.ImageUrl, np.ImageUrl);
+                Assert.Equal(tmp.Description, np.Description);
+
+                Assert.NotEqual(p.Name, np.Name);
+                Assert.NotEqual(p.Category, np.Category);
+                Assert.NotEqual(p.Price, np.Price);
+                Assert.NotEqual(p.ImageUrl, np.ImageUrl);
+                Assert.NotEqual(p.Description, np.Description);
+            }
+        }
+
+        [Fact]
+        public void UpdateInvalidIdProductCategoryRepository()
+        {
+            var p = new Product()
+            {
+                Id = 1,
+                Name = "Testing product",
+                Category = new ProductCategory()
+                {
+                    Id = 1,
+                    Name = "Testing category"
+                },
+                Price = 200.0,
+                ImageUrl = "Test URL",
+                Description = "This is a description"
+            };
+
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+
+                var np = repo.Add(p);
+                Assert.Equal(1, context.Product.Count());
+                var tmp = new Product()
+                {
+                    Id = 1,
+                    Name = "Testing monkey",
+                    Category = new ProductCategory()
+                    {
+                        Name = "monkey category"
+                    },
+                    Price = 100.0,
+                    ImageUrl = "Test monkey",
+                    Description = "This is a monkey"
+                };
+
+                Assert.Throws<ArgumentOutOfRangeException>(() =>
+                {
+                    repo.Update(np.Id++, tmp);
+                });
+            }
+        }
+
+        [Fact]
+        public void UpdateInvalidProductCategoryRepositoryExpectArgumentNullException()
+        {
+            var p = new Product()
+            {
+                Id = 1,
+                Name = "Testing product",
+                Category = new ProductCategory()
+                {
+                    Id = 1,
+                    Name = "Testing category"
+                },
+                Price = 200.0,
+                ImageUrl = "Test URL",
+                Description = "This is a description"
+            };
+
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+
+                var np1 = repo.Add(p);
+                Assert.Equal(1, context.ProductCategory.Count());
+                var tmp = new Product()
+                {
+                    Id = 1,
+                    Name = "Testing monkey",
+                    Category = new ProductCategory()
+                    {
+                        Name = "monkey category"
+                    },
+                    Price = 100.0,
+                    ImageUrl = "Test monkey"
+                };
+
+                Assert.Throws<ArgumentNullException>(() =>
+                {
+                    var np = repo.Update(np1.Id, tmp);
                 });
             }
         }

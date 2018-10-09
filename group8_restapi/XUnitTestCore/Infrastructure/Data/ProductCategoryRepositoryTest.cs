@@ -272,7 +272,7 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 Assert.Throws<ArgumentOutOfRangeException>(() =>
                 {
-                    var npc = repo.Update(pc.Id++, tmp);
+                    var npc = repo.Update(npc1.Id++, tmp);
                 });
             }
         }

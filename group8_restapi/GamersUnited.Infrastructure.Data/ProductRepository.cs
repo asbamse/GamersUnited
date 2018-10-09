@@ -45,7 +45,7 @@ namespace GamersUnited.Infrastructure.Data
                 {
                     npc = _pcr.GetById(obj.Category.Id);
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch (ArgumentOutOfRangeException)
                 {
                     npc = _pcr.Add(obj.Category);
                 }
@@ -97,7 +97,51 @@ namespace GamersUnited.Infrastructure.Data
 
         public Product Update(int id, Product obj)
         {
-            throw new NotImplementedException();
+            if (obj.Name == null)
+            {
+                throw new ArgumentNullException("The name cannot be null");
+            }
+            else if (obj.Category == null)
+            {
+                throw new ArgumentNullException("The product category cannot be null");
+            }
+            else if (obj.ImageUrl == null)
+            {
+                throw new ArgumentNullException("The image url cannot be null");
+            }
+            else if (obj.Description == null)
+            {
+                throw new ArgumentNullException("The description cannot be null");
+            }
+
+            ProductCategory npc;
+            if (obj.Category.Id > 0)
+            {
+                try
+                {
+                    npc = _pcr.GetById(obj.Category.Id);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    npc = _pcr.Add(obj.Category);
+                }
+            }
+            else
+            {
+                npc = _pcr.Add(obj.Category);
+            }
+            
+            var item = GetById(id);
+            item.Name = obj.Name;
+            item.Category = npc;
+            item.Price = obj.Price;
+            item.ImageUrl = obj.ImageUrl;
+            item.Description = obj.Description;
+            
+            item = _ctx.Product.Update(item).Entity;
+            _ctx.SaveChanges();
+
+            return item;
         }
     }
 }

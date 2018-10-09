@@ -238,7 +238,7 @@ namespace XUnitTestCore.Infrastructure.Data
         
         #region Count
         [Fact]
-        public void CountOneProductCategoryRepositoryTest()
+        public void CountOneProductRepositoryTest()
         {
             var p = new Product()
             {
@@ -265,7 +265,7 @@ namespace XUnitTestCore.Infrastructure.Data
         }
 
         [Fact]
-        public void CountNoProductCategoryRepositoryTest()
+        public void CountNoProductRepositoryTest()
         {
             using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
@@ -273,6 +273,93 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
                 Assert.Equal(0, repo.Count());
+            }
+        }
+        #endregion
+
+        #region GetAll
+        [Fact]
+        public void GetAllProductRepositoryTest()
+        {
+            var pl = new List<Product>{
+                new Product()
+            {
+                Id = 1,
+                Name = "1",
+                Category = new ProductCategory()
+                {
+                    Id = 1,
+                    Name = "Testing category"
+                },
+                Price = 200.0,
+                ImageUrl = "Test URL",
+                Description = "This is a description"
+            }, new Product()
+            {
+                Id = 2,
+                Name = "2",
+                Category = new ProductCategory()
+                {
+                    Id = 1,
+                    Name = "Testing category"
+                },
+                Price = 400.0,
+                ImageUrl = "Est URL",
+                Description = "This a description"
+            }, new Product()
+            {
+                Id = 3,
+                Name = "3",
+                Category = new ProductCategory()
+                {
+                    Id = 1
+                },
+                Price = 200.1,
+                ImageUrl = "Est URL",
+                Description = "This is description"
+            }, new Product()
+            {
+                Id = 4,
+                Name = "4",
+                Category = new ProductCategory()
+                {
+                    Id = 2
+                },
+                Price = 200.1,
+                ImageUrl = "Test UR",
+                Description = "This is description"
+            }
+        };
+
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+                for (int i = 0; i < pl.Count; i++)
+                {
+                    repo.Add(pl[i]);
+                }
+
+                var npl = repo.GetAll();
+                for (int i = 0; i < pl.Count; i++)
+                {
+                    Assert.Equal(pl[i].Name, npl[i].Name);
+                }
+
+                Assert.Equal(4, context.Product.Count());
+            }
+        }
+
+        [Fact]
+        public void GetAllEmptyProductRepositoryTest()
+        {
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
+            {
+                context.Database.EnsureDeleted();
+
+                var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
+                Assert.Equal(0, context.Product.Count());
             }
         }
         #endregion

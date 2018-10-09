@@ -70,7 +70,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public IList<Product> GetAll()
         {
-            throw new NotImplementedException();
+            return _ctx.Product.ToList();
         }
 
         public Product GetById(int id)

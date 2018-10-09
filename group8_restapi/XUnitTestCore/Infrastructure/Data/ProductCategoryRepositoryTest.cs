@@ -12,10 +12,6 @@ namespace XUnitTestCore.Infrastructure.Data
 {
     public class ProductCategoryRepositoryTest
     {
-        private readonly DbContextOptions<GamersUnitedContext> _options = new DbContextOptionsBuilder<GamersUnitedContext>()
-            .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-            .Options;
-
         #region Add
         [Fact]
         public void CreateValidProductCategoryRepositoryTest()
@@ -25,7 +21,7 @@ namespace XUnitTestCore.Infrastructure.Data
             var pc3 = new ProductCategory() { Id = 3, Name = "Testing" };
 
             // Run the test against one instance of the context
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -47,12 +43,12 @@ namespace XUnitTestCore.Infrastructure.Data
         }
 
         [Fact]
-        public void CreateInvalidProductCategoryRepositoryTestAutoincrement()
+        public void CreateValidProductCategoryRepositoryTestAutoincrement()
         {
             var pc = new ProductCategory() { Id = 9999, Name = "" };
 
             // Run the test against one instance of the context
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -68,7 +64,7 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var pc = new ProductCategory() { Id = 1 };
 
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -87,7 +83,7 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var pc = new ProductCategory() { Name="" };
 
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -100,7 +96,7 @@ namespace XUnitTestCore.Infrastructure.Data
         [Fact]
         public void CountNoProductCategoryRepositoryTest()
         {
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -122,7 +118,7 @@ namespace XUnitTestCore.Infrastructure.Data
                 new ProductCategory() { Name = "5" }
             };
 
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -145,7 +141,7 @@ namespace XUnitTestCore.Infrastructure.Data
         [Fact]
         public void GetAllEmptyProductCategoryRepositoryTest()
         {
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -161,7 +157,7 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var pc = new ProductCategory() { Name = "test" };
 
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -180,7 +176,7 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var pc = new ProductCategory() { Name = "test" };
 
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -201,7 +197,7 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var pc = new ProductCategory() { Name = "test" };
 
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -221,7 +217,7 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var pc = new ProductCategory() { Name = "test" };
 
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -242,7 +238,7 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var pc = new ProductCategory() { Id = 1, Name = "Testing category" };
             
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -264,7 +260,7 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var pc = new ProductCategory() { Id = 1, Name = "Testing category" };
 
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -286,7 +282,7 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var pc = new ProductCategory() { Id = 1, Name = "Testing category" };
 
-            using (var context = new GamersUnitedContext(_options))
+            using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
                 context.Database.EnsureDeleted();
 
@@ -303,5 +299,12 @@ namespace XUnitTestCore.Infrastructure.Data
             }
         }
         #endregion
+
+        private DbContextOptions<GamersUnitedContext> GetOption(string databasename)
+        {
+            return new DbContextOptionsBuilder<GamersUnitedContext>()
+                .UseInMemoryDatabase(databaseName: databasename)
+                .Options;
+        }
     }
 }

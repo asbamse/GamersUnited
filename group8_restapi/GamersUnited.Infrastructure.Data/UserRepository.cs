@@ -24,6 +24,17 @@ namespace GamersUnited.Infrastructure.Data
 
         public User Add(User obj)
         {
+            if (string.IsNullOrEmpty(obj.FirstName))
+                throw new ArgumentException("First name cannot be null or empty.");
+            else if (string.IsNullOrEmpty(obj.LastName))
+                throw new ArgumentException("Last name cannot be null or empty.");
+            else if (string.IsNullOrEmpty(obj.Address))
+                throw new ArgumentException("Address cannot be null or empty.");
+            else if (string.IsNullOrEmpty(obj.Email))
+                throw new ArgumentException("Email cannot be null or empty.");
+            else if (string.IsNullOrEmpty(obj.Password))
+                throw new ArgumentException("Password cannot be null or empty.");
+
             var tmp = new User
             {
                 FirstName = obj.FirstName,
@@ -60,6 +71,16 @@ namespace GamersUnited.Infrastructure.Data
 
         public User Update(int id, User obj)
         {
+            if (string.IsNullOrEmpty(obj.FirstName))
+                throw new ArgumentException("First name cannot be null or empty.");
+            if (string.IsNullOrEmpty(obj.LastName))
+                throw new ArgumentException("Last name cannot be null or empty.");
+            else if (string.IsNullOrEmpty(obj.Address))
+                throw new ArgumentException("Address cannot be null or empty.");
+            else if (string.IsNullOrEmpty(obj.Email))
+                throw new ArgumentException("Email cannot be null or empty.");
+            else if (string.IsNullOrEmpty(obj.Password))
+                throw new ArgumentException("Password cannot be null or empty.");
 
             var item = GetById(id);
             item.FirstName = obj.FirstName;

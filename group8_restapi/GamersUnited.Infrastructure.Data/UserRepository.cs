@@ -8,7 +8,7 @@ using GamersUnited.Infrastructure.Data.Context;
 
 namespace GamersUnited.Infrastructure.Data
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IRepository<User>, ILoginValidation
     {
         private readonly GamersUnitedContext _ctx;
 
@@ -105,6 +105,11 @@ namespace GamersUnited.Infrastructure.Data
             _ctx.SaveChanges();
 
             return item;
+        }
+
+        public bool ValidateLoginInformation(string email, string password)
+        {
+            return _ctx.User.Where(u => (u.Email.ToLower().Equals(email.ToLower())) && (u.Password.Equals(password))).FirstOrDefault() != null;
         }
     }
 }

@@ -54,6 +54,7 @@ namespace GamersUnited.RestAPI
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
+            services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IGameService, GameService>(); 
             services.AddScoped<IRepository<Game>, GameRepository>();
@@ -64,6 +65,7 @@ namespace GamersUnited.RestAPI
             services.AddScoped<IRepository<Sold>, SoldRepository>();
             services.AddScoped<IRepository<Stock>, StockRepository>();
             services.AddScoped<IRepository<User>, UserRepository>();
+            services.AddScoped<ILoginValidation, UserRepository>();
 
             services.AddMvc();
         }

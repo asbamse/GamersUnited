@@ -22,7 +22,7 @@ namespace GamersUnited.Infrastructure.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductCategory>()
-                .HasKey(pc => pc.Id);
+                .HasKey(pc => pc.ProductCategoryId);
 
             modelBuilder.Entity<Product>()
                 .HasOne<ProductCategory>(p => p.Category)
@@ -33,31 +33,37 @@ namespace GamersUnited.Infrastructure.Data.Context
                 .HasOne<Product>(g => g.Product)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasForeignKey<Product>(p => p.Id);
+                .HasForeignKey<Game>(g => g.ProductFK);
 
             modelBuilder.Entity<Game>()
                 .HasOne<GameGenre>(g => g.Genre)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Stock>().HasKey(s => new { s.StockId, s.ProductId });
+            modelBuilder.Entity<Stock>().Property(s => s.StockId).ValueGeneratedOnAdd();
+
             modelBuilder.Entity<Stock>()
                 .HasOne<Product>(s => s.Product)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasForeignKey<Product>(p => p.Id);
+                .WithMany()
+                .HasForeignKey(si => si.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Sold>().HasKey(s => new { s.SoldId, s.ProductId });
+            modelBuilder.Entity<Sold>().Property(s => s.SoldId).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Sold>()
                 .HasOne<Product>(s => s.Product)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasForeignKey<Product>(p => p.Id);
+                .WithMany()
+                .HasForeignKey(si => si.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<SoldInvoiceRelation>().HasKey(si => new { si.SoldId, si.InvoiceId });
+            modelBuilder.Entity<SoldInvoiceRelation>().HasKey(si => new { si.SoldId, si.ProductId, si.InvoiceId });
 
             modelBuilder.Entity<SoldInvoiceRelation>()
                 .HasOne<Sold>(s => s.Sold)
                 .WithMany()
-                .HasForeignKey(si => si.SoldId)
+                .HasForeignKey(si => new {si.SoldId, si.ProductId})
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<SoldInvoiceRelation>()

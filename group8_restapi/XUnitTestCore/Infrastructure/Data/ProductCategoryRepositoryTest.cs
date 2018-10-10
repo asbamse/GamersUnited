@@ -16,9 +16,9 @@ namespace XUnitTestCore.Infrastructure.Data
         [Fact]
         public void CreateValidProductCategoryRepositoryTest()
         {
-            var pc1 = new ProductCategory() { Id = 1, Name = "Testing category" };
-            var pc2 = new ProductCategory() { Id = 2, Name = "category" };
-            var pc3 = new ProductCategory() { Id = 3, Name = "Testing" };
+            var pc1 = new ProductCategory() { ProductCategoryId = 1, Name = "Testing category" };
+            var pc2 = new ProductCategory() { ProductCategoryId = 2, Name = "category" };
+            var pc3 = new ProductCategory() { ProductCategoryId = 3, Name = "Testing" };
 
             // Run the test against one instance of the context
             using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
@@ -45,7 +45,7 @@ namespace XUnitTestCore.Infrastructure.Data
         [Fact]
         public void CreateValidProductCategoryRepositoryTestAutoincrement()
         {
-            var pc = new ProductCategory() { Id = 9999, Name = "" };
+            var pc = new ProductCategory() { ProductCategoryId = 9999, Name = "" };
 
             // Run the test against one instance of the context
             using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
@@ -55,14 +55,14 @@ namespace XUnitTestCore.Infrastructure.Data
                 var repo = new ProductCategoryRepository(context);
                 var npc = repo.Add(pc);
                 
-                Assert.NotEqual(pc.Id, npc.Id);
+                Assert.NotEqual(pc.ProductCategoryId, npc.ProductCategoryId);
             }
         }
 
         [Fact]
         public void CreateInvalidProductCategoryRepositoryTestExpectArgumentNullException()
         {
-            var pc = new ProductCategory() { Id = 1 };
+            var pc = new ProductCategory() { ProductCategoryId = 1 };
 
             using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
@@ -164,9 +164,9 @@ namespace XUnitTestCore.Infrastructure.Data
                 var repo = new ProductCategoryRepository(context);
                 var npc = repo.Add(pc);
 
-                var get = repo.GetById(npc.Id);
+                var get = repo.GetById(npc.ProductCategoryId);
 
-                Assert.Equal(npc.Id, get.Id);
+                Assert.Equal(npc.ProductCategoryId, get.ProductCategoryId);
                 Assert.Equal(pc.Name, get.Name);
             }
         }
@@ -206,7 +206,7 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 var get = repo.Remove(npc);
 
-                Assert.Equal(npc.Id, get.Id);
+                Assert.Equal(npc.ProductCategoryId, get.ProductCategoryId);
                 Assert.Equal(pc.Name, get.Name);
                 Assert.Equal(0, context.ProductCategory.Count());
             }
@@ -223,7 +223,7 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 var repo = new ProductCategoryRepository(context);
                 var npc = repo.Add(pc);
-                pc.Id = npc.Id++;
+                pc.ProductCategoryId = npc.ProductCategoryId++;
 
                 Assert.Throws<ArgumentOutOfRangeException>(() => {
                     var get = repo.Remove(pc);
@@ -236,7 +236,7 @@ namespace XUnitTestCore.Infrastructure.Data
         [Fact]
         public void UpdateValidProductCategoryRepositoryTest()
         {
-            var pc = new ProductCategory() { Id = 1, Name = "Testing category" };
+            var pc = new ProductCategory() { ProductCategoryId = 1, Name = "Testing category" };
             
             using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
@@ -247,9 +247,9 @@ namespace XUnitTestCore.Infrastructure.Data
                 var ipc = repo.Add(pc);
                 Assert.Equal(1, context.ProductCategory.Count());
                 var tmp = new ProductCategory() { Name = "Test Update" };
-                var npc = repo.Update(ipc.Id, tmp);
+                var npc = repo.Update(ipc.ProductCategoryId, tmp);
 
-                Assert.Equal(ipc.Id, npc.Id);
+                Assert.Equal(ipc.ProductCategoryId, npc.ProductCategoryId);
                 Assert.NotEqual(pc.Name, npc.Name);
                 Assert.Equal(tmp.Name, npc.Name);
             }
@@ -258,7 +258,7 @@ namespace XUnitTestCore.Infrastructure.Data
         [Fact]
         public void UpdateInvalidIdProductCategoryRepository()
         {
-            var pc = new ProductCategory() { Id = 1, Name = "Testing category" };
+            var pc = new ProductCategory() { ProductCategoryId = 1, Name = "Testing category" };
 
             using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
@@ -272,7 +272,7 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 Assert.Throws<ArgumentOutOfRangeException>(() =>
                 {
-                    var npc = repo.Update(npc1.Id++, tmp);
+                    var npc = repo.Update(npc1.ProductCategoryId++, tmp);
                 });
             }
         }
@@ -280,7 +280,7 @@ namespace XUnitTestCore.Infrastructure.Data
         [Fact]
         public void UpdateInvalidProductCategoryRepositoryExpectArgumentNullException()
         {
-            var pc = new ProductCategory() { Id = 1, Name = "Testing category" };
+            var pc = new ProductCategory() { ProductCategoryId = 1, Name = "Testing category" };
 
             using (var context = new GamersUnitedContext(GetOption(System.Reflection.MethodBase.GetCurrentMethod().Name)))
             {
@@ -294,7 +294,7 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 Assert.Throws<ArgumentNullException>(() =>
                 {
-                    var npc = repo.Update(pc.Id, tmp);
+                    var npc = repo.Update(pc.ProductCategoryId, tmp);
                 });
             }
         }

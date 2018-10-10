@@ -52,12 +52,12 @@ namespace GamersUnited.Infrastructure.Data
 
         public IList<Invoice> GetAll()
         {
-            return _ctx.Invoice.Include(i => i.Products).Include(i => i.Customer).ToList();
+            return _ctx.Invoice.Include(i => i.Products).ThenInclude(si => si.Sold).Include(i => i.Customer).ToList();
         }
 
         public Invoice GetById(int id)
         {
-            var item = _ctx.Invoice.Include(i => i.Products).Include(i => i.Customer).FirstOrDefault(b => b.Id == id);
+            var item = _ctx.Invoice.Include(i => i.Products).Include(i => i.Customer).FirstOrDefault(b => b.InvoiceId == id);
 
             if (item == null)
             {
@@ -69,7 +69,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public Invoice Remove(Invoice obj)
         {
-            var item = GetById(obj.Id);
+            var item = GetById(obj.InvoiceId);
 
             var entityEntry = _ctx.Invoice.Attach(item);
             entityEntry.State = EntityState.Deleted;
@@ -96,7 +96,7 @@ namespace GamersUnited.Infrastructure.Data
             List<SoldInvoiceRelation> soldInvoices = new List<SoldInvoiceRelation>(obj.Products);
 
             // Deletes the Invoice products which is already in the sold invoice relation.
-            var productsFromDb = _ctx.Invoice.Include(i => i.Products).AsNoTracking().FirstOrDefault(i => i.Id == obj.Id).Products.ToList();
+            var productsFromDb = _ctx.Invoice.Include(i => i.Products).AsNoTracking().FirstOrDefault(i => i.InvoiceId == obj.InvoiceId).Products.ToList();
 
             foreach (var invoiceSold in productsFromDb)
             {
@@ -121,7 +121,7 @@ namespace GamersUnited.Infrastructure.Data
 
             _ctx.SaveChanges();
 
-            return _ctx.Invoice.Include(i => i.Products).Include(i => i.Customer).FirstOrDefault(i => i.Id == obj.Id);
+            return _ctx.Invoice.Include(i => i.Products).Include(i => i.Customer).FirstOrDefault(i => i.InvoiceId == obj.InvoiceId);
         }
     }
 }

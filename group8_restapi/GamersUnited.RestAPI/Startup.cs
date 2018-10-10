@@ -41,7 +41,7 @@ namespace GamersUnited.RestAPI
             if (Environment.IsDevelopment())
             {
                 // In-memory database:
-                services.AddDbContext<GamersUnitedContext>(opt => opt.UseInMemoryDatabase("InMemory: GamersUnitedContext"));
+                services.AddDbContext<GamersUnitedContext>(opt => opt.UseInMemoryDatabase("InMemory: GamersUnitedContext").EnableSensitiveDataLogging());
             }
             else
             {
@@ -54,9 +54,11 @@ namespace GamersUnited.RestAPI
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
+            services.AddScoped<IInvoiceService, InvoiceService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IGameService, GameService>(); 
+            services.AddScoped<IGameService, GameService>();
+            services.AddScoped<IStockService, StockService>();
             services.AddScoped<IRepository<Game>, GameRepository>();
             services.AddScoped<IRepository<GameGenre>, GameGenreRepository>();
             services.AddScoped<IRepository<Invoice>, InvoiceRepository>();
@@ -64,6 +66,7 @@ namespace GamersUnited.RestAPI
             services.AddScoped<IRepository<ProductCategory>, ProductCategoryRepository>();
             services.AddScoped<IRepository<Sold>, SoldRepository>();
             services.AddScoped<IRepository<Stock>, StockRepository>();
+            services.AddScoped<IRemoveStockWithProduct, StockRepository>();
             services.AddScoped<IRepository<User>, UserRepository>();
             services.AddScoped<ILoginValidation, UserRepository>();
 

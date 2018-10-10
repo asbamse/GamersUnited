@@ -6,7 +6,7 @@ namespace GamersUnited.Core.Entities
 {
     public class Product
     {
-        public int Id { get; set; }
+        public int ProductId { get; set; }
         public string Name { get; set; }
         public ProductCategory Category { get; set; }
         public double Price { get; set; }

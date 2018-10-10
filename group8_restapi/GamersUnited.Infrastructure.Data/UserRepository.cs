@@ -54,7 +54,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public User GetById(int id)
         {
-            var item = _ctx.User.FirstOrDefault(u => u.Id == id);
+            var item = _ctx.User.FirstOrDefault(u => u.UserId == id);
 
             if (item == null)
             {
@@ -99,7 +99,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public User Remove(User obj)
         {
-            var item = GetById(obj.Id);
+            var item = GetById(obj.UserId);
 
             _ctx.User.Remove(item);
             _ctx.SaveChanges();

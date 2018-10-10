@@ -31,11 +31,11 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             Product np;
-            if(obj.Product.Id > 0)
+            if(obj.Product.ProductId > 0)
             {
                 try
                 {
-                    np = _pr.GetById(obj.Product.Id);
+                    np = _pr.GetById(obj.Product.ProductId);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -47,7 +47,7 @@ namespace GamersUnited.Infrastructure.Data
                 np = _pr.Add(obj.Product);
             }
 
-            var tmp = new Sold { Product = np, CDKey = obj.CDKey };
+            var tmp = new Sold { ProductId = np.ProductId, Product = np, CDKey = obj.CDKey };
 
             Sold item = _ctx.Sold.Add(tmp).Entity;
             _ctx.SaveChanges();
@@ -67,7 +67,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public Sold GetById(int id)
         {
-            var item = _ctx.Sold.FirstOrDefault(b => b.Id == id);
+            var item = _ctx.Sold.FirstOrDefault(b => b.ProductId == id);
 
             if (item == null)
             {
@@ -79,7 +79,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public Sold Remove(Sold obj)
         {
-            var item = GetById(obj.Id);
+            var item = GetById(obj.ProductId);
 
             _ctx.Sold.Remove(item);
             _ctx.SaveChanges();
@@ -99,11 +99,11 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             Product np;
-            if (obj.Product.Id > 0)
+            if (obj.Product.ProductId > 0)
             {
                 try
                 {
-                    np = _pr.GetById(obj.Product.Id);
+                    np = _pr.GetById(obj.Product.ProductId);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -116,6 +116,7 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             var item = GetById(id);
+            item.ProductId = np.ProductId;
             item.Product = np;
             item.CDKey = obj.CDKey;
             

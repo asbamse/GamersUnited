@@ -24,8 +24,8 @@ namespace XUnitTestCore.Infrastructure.Data
         public ProductRepositoryTest()
         {
             mockProductCategoryRepo.Setup(x => x.Count()).Returns(() => productCategories.Count);
-            mockProductCategoryRepo.Setup(x => x.Add(It.IsAny<ProductCategory>())).Returns<ProductCategory>((pc) => { pc.Id = nextId++; productCategories.Add(pc.Id, pc); return productCategories[pc.Id]; });
-            mockProductCategoryRepo.Setup(x => x.Remove(It.IsAny<ProductCategory>())).Returns<ProductCategory>((pc) => { ProductCategory tmp = productCategories[pc.Id]; productCategories.Remove(pc.Id); return tmp; });
+            mockProductCategoryRepo.Setup(x => x.Add(It.IsAny<ProductCategory>())).Returns<ProductCategory>((pc) => { pc.ProductCategoryId = nextId++; productCategories.Add(pc.ProductCategoryId, pc); return productCategories[pc.ProductCategoryId]; });
+            mockProductCategoryRepo.Setup(x => x.Remove(It.IsAny<ProductCategory>())).Returns<ProductCategory>((pc) => { ProductCategory tmp = productCategories[pc.ProductCategoryId]; productCategories.Remove(pc.ProductCategoryId); return tmp; });
             mockProductCategoryRepo.Setup(x => x.GetById(It.IsAny<int>())).Returns<int>((pcNumb) => 
             {
                 if(productCategories.ContainsKey(pcNumb))
@@ -57,11 +57,11 @@ namespace XUnitTestCore.Infrastructure.Data
         public void CreateValidProductRepositoryTest()
         {
             var p1 = new Product() {
-                Id = 1,
+                ProductId = 1,
                 Name = "Testing product",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -70,7 +70,7 @@ namespace XUnitTestCore.Infrastructure.Data
             };
             var p2 = new Product()
             {
-                Id = 2,
+                ProductId = 2,
                 Name = "Testing",
                 Category = new ProductCategory()
                 {
@@ -82,11 +82,11 @@ namespace XUnitTestCore.Infrastructure.Data
             };
             var p3 = new Product()
             {
-                Id = 3,
+                ProductId = 3,
                 Name = "product",
                 Category = new ProductCategory()
                 {
-                    Id = 1
+                    ProductCategoryId = 1
                 },
                 Price = 200.1,
                 ImageUrl = "Test UR",
@@ -122,7 +122,7 @@ namespace XUnitTestCore.Infrastructure.Data
                 Assert.Equal(p2.Description, np2.Description);
 
                 Assert.Equal(p3.Name, np3.Name);
-                Assert.Equal(p3.Category.Id, np3.Category.Id);
+                Assert.Equal(p3.Category.ProductCategoryId, np3.Category.ProductCategoryId);
                 Assert.Equal(p3.Price, np3.Price);
                 Assert.Equal(p3.ImageUrl, np3.ImageUrl);
                 Assert.Equal(p3.Description, np3.Description);
@@ -134,11 +134,11 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var p1 = new Product()
             {
-                Id = -10,
+                ProductId = -10,
                 Name = "Testing product",
                 Category = new ProductCategory()
                 { 
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -147,7 +147,7 @@ namespace XUnitTestCore.Infrastructure.Data
             };
             var p2 = new Product()
             {
-                Id = -23,
+                ProductId = -23,
                 Name = "Testing",
                 Category = new ProductCategory()
                 {
@@ -167,11 +167,11 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 var np1 = repo.Add(p1);
                 Assert.Equal(1, context.Product.Count());
-                Assert.NotEqual(p1.Id, np1.Id);
+                Assert.NotEqual(p1.ProductId, np1.ProductId);
 
                 var np2 = repo.Add(p2);
                 Assert.Equal(2, context.Product.Count());
-                Assert.NotEqual(p2.Id, np2.Id);
+                Assert.NotEqual(p2.ProductId, np2.ProductId);
             }
         }
 
@@ -180,10 +180,10 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var p1 = new Product()
             {
-                Id = 1,
+                ProductId = 1,
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -192,7 +192,7 @@ namespace XUnitTestCore.Infrastructure.Data
             };
             var p2 = new Product()
             {
-                Id = 2,
+                ProductId = 2,
                 Name = "Testing",
                 Price = 400.0,
                 ImageUrl = "Est URL",
@@ -200,22 +200,22 @@ namespace XUnitTestCore.Infrastructure.Data
             };
             var p3 = new Product()
             {
-                Id = 3,
+                ProductId = 3,
                 Name = "product",
                 Category = new ProductCategory()
                 {
-                    Id = 1
+                    ProductCategoryId = 1
                 },
                 Price = 200.1,
                 Description = "This is description"
             };
             var p4 = new Product()
             {
-                Id = 4,
+                ProductId = 4,
                 Name = "prodeuct",
                 Category = new ProductCategory()
                 {
-                    Id = 2
+                    ProductCategoryId = 2
                 },
                 Price = 200.1,
                 ImageUrl = "Test UR"
@@ -254,11 +254,11 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var p = new Product()
             {
-                Id = 1,
+                ProductId = 1,
                 Name = "Testing product",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -296,11 +296,11 @@ namespace XUnitTestCore.Infrastructure.Data
             var pl = new List<Product>{
                 new Product()
             {
-                Id = 1,
+                ProductId = 1,
                 Name = "1",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -308,11 +308,11 @@ namespace XUnitTestCore.Infrastructure.Data
                 Description = "This is a description"
             }, new Product()
             {
-                Id = 2,
+                ProductId = 2,
                 Name = "2",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 400.0,
@@ -320,22 +320,22 @@ namespace XUnitTestCore.Infrastructure.Data
                 Description = "This a description"
             }, new Product()
             {
-                Id = 3,
+                ProductId = 3,
                 Name = "3",
                 Category = new ProductCategory()
                 {
-                    Id = 1
+                    ProductCategoryId = 1
                 },
                 Price = 200.1,
                 ImageUrl = "Est URL",
                 Description = "This is description"
             }, new Product()
             {
-                Id = 4,
+                ProductId = 4,
                 Name = "4",
                 Category = new ProductCategory()
                 {
-                    Id = 2
+                    ProductCategoryId = 2
                 },
                 Price = 200.1,
                 ImageUrl = "Test UR",
@@ -382,11 +382,11 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var p = new Product()
             {
-                Id = 1,
+                ProductId = 1,
                 Name = "1",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -401,9 +401,9 @@ namespace XUnitTestCore.Infrastructure.Data
                 var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
                 var np = repo.Add(p);
 
-                var get = repo.GetById(np.Id);
+                var get = repo.GetById(np.ProductId);
 
-                Assert.Equal(np.Id, get.Id);
+                Assert.Equal(np.ProductId, get.ProductId);
                 Assert.Equal(p.Name, get.Name);
             }
         }
@@ -413,11 +413,11 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var p = new Product()
             {
-                Id = 1,
+                ProductId = 1,
                 Name = "1",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -445,11 +445,11 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var p = new Product()
             {
-                Id = 1,
+                ProductId = 1,
                 Name = "1",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -466,7 +466,7 @@ namespace XUnitTestCore.Infrastructure.Data
                 
                 var get = repo.Remove(np);
 
-                Assert.Equal(np.Id, get.Id);
+                Assert.Equal(np.ProductId, get.ProductId);
                 Assert.Equal(p.Name, get.Name);
                 Assert.Equal(0, context.Product.Count());
             }
@@ -477,11 +477,11 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var p = new Product()
             {
-                Id = 1,
+                ProductId = 1,
                 Name = "1",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -495,7 +495,7 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 var repo = new ProductRepository(context, mockProductCategoryRepo.Object);
                 var np = repo.Add(p);
-                p.Id = np.Id++;
+                p.ProductId = np.ProductId++;
 
                 Assert.Throws<ArgumentOutOfRangeException>(() => {
                     var get = repo.Remove(p);
@@ -510,11 +510,11 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var p = new Product()
             {
-                Id = 1,
+                ProductId = 1,
                 Name = "Testing product",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -532,7 +532,7 @@ namespace XUnitTestCore.Infrastructure.Data
                 Assert.Equal(1, context.Product.Count());
                 var tmp = new Product()
                 {
-                    Id = 1,
+                    ProductId = 1,
                     Name = "Testing monkey",
                     Category = new ProductCategory()
                     {
@@ -542,9 +542,9 @@ namespace XUnitTestCore.Infrastructure.Data
                     ImageUrl = "Test monkey",
                     Description = "This is a monkey"
                 };
-                var np = repo.Update(ip.Id, tmp);
+                var np = repo.Update(ip.ProductId, tmp);
 
-                Assert.Equal(ip.Id, np.Id);
+                Assert.Equal(ip.ProductId, np.ProductId);
 
                 Assert.Equal(tmp.Name, np.Name);
                 Assert.Equal(tmp.Category, np.Category);
@@ -565,11 +565,11 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var p = new Product()
             {
-                Id = 1,
+                ProductId = 1,
                 Name = "Testing product",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -587,7 +587,7 @@ namespace XUnitTestCore.Infrastructure.Data
                 Assert.Equal(1, context.Product.Count());
                 var tmp = new Product()
                 {
-                    Id = 1,
+                    ProductId = 1,
                     Name = "Testing monkey",
                     Category = new ProductCategory()
                     {
@@ -600,7 +600,7 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 Assert.Throws<ArgumentOutOfRangeException>(() =>
                 {
-                    repo.Update(np.Id++, tmp);
+                    repo.Update(np.ProductId++, tmp);
                 });
             }
         }
@@ -610,11 +610,11 @@ namespace XUnitTestCore.Infrastructure.Data
         {
             var p = new Product()
             {
-                Id = 1,
+                ProductId = 1,
                 Name = "Testing product",
                 Category = new ProductCategory()
                 {
-                    Id = 1,
+                    ProductCategoryId = 1,
                     Name = "Testing category"
                 },
                 Price = 200.0,
@@ -632,7 +632,7 @@ namespace XUnitTestCore.Infrastructure.Data
                 Assert.Equal(1, context.ProductCategory.Count());
                 var tmp = new Product()
                 {
-                    Id = 1,
+                    ProductId = 1,
                     Name = "Testing monkey",
                     Category = new ProductCategory()
                     {
@@ -644,7 +644,7 @@ namespace XUnitTestCore.Infrastructure.Data
 
                 Assert.Throws<ArgumentNullException>(() =>
                 {
-                    var np = repo.Update(np1.Id, tmp);
+                    var np = repo.Update(np1.ProductId, tmp);
                 });
             }
         }

@@ -39,7 +39,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public GameGenre GetById(int id)
         {
-            var item = _ctx.GameGenre.FirstOrDefault(g => g.Id == id);
+            var item = _ctx.GameGenre.FirstOrDefault(g => g.GameGenreId == id);
 
             if (item == null)
             {
@@ -72,7 +72,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public GameGenre Remove(GameGenre obj)
         {
-            var item = GetById(obj.Id);
+            var item = GetById(obj.GameGenreId);
 
             _ctx.GameGenre.Remove(item);
             _ctx.SaveChanges();

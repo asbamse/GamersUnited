@@ -82,7 +82,7 @@ namespace GamersUnited.RestAPI.Controllers
         {
             try
             {
-                return Ok(_gameService.RemoveGame(new Game() { Id = id }));
+                return Ok(_gameService.RemoveGame(new Game() { GameId = id }));
             }
             catch (Exception e)
             {

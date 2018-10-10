@@ -44,7 +44,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public ProductCategory GetById(int id)
         {
-            var item = _ctx.ProductCategory.FirstOrDefault(b => b.Id == id);
+            var item = _ctx.ProductCategory.FirstOrDefault(b => b.ProductCategoryId == id);
 
             if (item == null)
             {
@@ -56,7 +56,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public ProductCategory Remove(ProductCategory obj)
         {
-            var item = GetById(obj.Id);
+            var item = GetById(obj.ProductCategoryId);
 
             _ctx.ProductCategory.Remove(item);
             _ctx.SaveChanges();

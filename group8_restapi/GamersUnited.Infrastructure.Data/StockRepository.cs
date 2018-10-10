@@ -1,6 +1,7 @@
 ﻿using GamersUnited.Core.DomainService;
 using GamersUnited.Core.Entities;
 using GamersUnited.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace GamersUnited.Infrastructure.Data
 {
-    public class StockRepository : IRepository<Stock>
+    public class StockRepository : IRepository<Stock>, IRemoveStockWithProduct
     {
         readonly GamersUnitedContext _ctx;
         readonly IRepository<Product> _pr;
@@ -31,11 +32,11 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             Product np;
-            if(obj.Product.Id > 0)
+            if(obj.Product.ProductId > 0)
             {
                 try
                 {
-                    np = _pr.GetById(obj.Product.Id);
+                    np = _pr.GetById(obj.Product.ProductId);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -47,7 +48,7 @@ namespace GamersUnited.Infrastructure.Data
                 np = _pr.Add(obj.Product);
             }
 
-            var tmp = new Stock { Product = np, CDKey = obj.CDKey };
+            var tmp = new Stock { ProductId = np.ProductId, Product = np, CDKey = obj.CDKey };
 
             Stock item = _ctx.Stock.Add(tmp).Entity;
             _ctx.SaveChanges();
@@ -67,7 +68,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public Stock GetById(int id)
         {
-            var item = _ctx.Stock.FirstOrDefault(b => b.Id == id);
+            var item = _ctx.Stock.FirstOrDefault(b => b.StockId == id);
 
             if (item == null)
             {
@@ -79,10 +80,23 @@ namespace GamersUnited.Infrastructure.Data
 
         public Stock Remove(Stock obj)
         {
-            var item = GetById(obj.Id);
+            var item = GetById(obj.StockId);
 
             _ctx.Stock.Remove(item);
             _ctx.SaveChanges();
+
+            return item;
+        }
+
+        public Stock RemoveFirstWithProduct(Product product)
+        {
+            var item = _ctx.Stock.Include(s => s.Product).FirstOrDefault(b => b.Product.ProductId == product.ProductId);
+
+            if (item == null)
+            {
+                throw new ArgumentException("Product not in stock!");
+            }
+            Remove(item);
 
             return item;
         }
@@ -99,11 +113,11 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             Product np;
-            if (obj.Product.Id > 0)
+            if (obj.Product.ProductId > 0)
             {
                 try
                 {
-                    np = _pr.GetById(obj.Product.Id);
+                    np = _pr.GetById(obj.Product.ProductId);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -116,6 +130,7 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             var item = GetById(id);
+            item.ProductId = np.ProductId;
             item.Product = np;
             item.CDKey = obj.CDKey;
             

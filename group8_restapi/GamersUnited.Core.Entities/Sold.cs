@@ -6,7 +6,8 @@ namespace GamersUnited.Core.Entities
 {
     public class Sold
     {
-        public int Id { get; set; }
+        public int SoldId { get; set; }
+        public int ProductId { get; set; }
         public Product Product { get; set; }
         public string CDKey { get; set; }
     }

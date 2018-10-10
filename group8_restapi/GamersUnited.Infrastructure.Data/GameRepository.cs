@@ -33,11 +33,11 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             Product np;
-            if(obj.Product.Id > 0)
+            if(obj.Product.ProductId > 0)
             {
                 try
                 {
-                    np = _pr.GetById(obj.Product.Id);
+                    np = _pr.GetById(obj.Product.ProductId);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -50,11 +50,11 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             GameGenre ngg;
-            if (obj.Genre.Id > 0)
+            if (obj.Genre.GameGenreId > 0)
             {
                 try
                 {
-                    ngg = _ggr.GetById(obj.Genre.Id);
+                    ngg = _ggr.GetById(obj.Genre.GameGenreId);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -66,6 +66,7 @@ namespace GamersUnited.Infrastructure.Data
                 ngg = _ggr.Add(obj.Genre);
             }
 
+            _ctx.SaveChanges();
             var tmp = new Game { Product = np, Genre = ngg };
 
             Game item = _ctx.Game.Add(tmp).Entity;
@@ -86,7 +87,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public Game GetById(int id)
         {
-            var item = _ctx.Game.FirstOrDefault(b => b.Id == id);
+            var item = _ctx.Game.FirstOrDefault(b => b.GameId == id);
 
             if (item == null)
             {
@@ -98,7 +99,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public Game Remove(Game obj)
         {
-            var item = GetById(obj.Id);
+            var item = GetById(obj.GameId);
 
             _ctx.Game.Remove(item);
             _ctx.SaveChanges();
@@ -118,11 +119,11 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             Product np;
-            if (obj.Product.Id > 0)
+            if (obj.Product.ProductId > 0)
             {
                 try
                 {
-                    np = _pr.GetById(obj.Product.Id);
+                    np = _pr.GetById(obj.Product.ProductId);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -135,11 +136,11 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             GameGenre ngg;
-            if (obj.Genre.Id > 0)
+            if (obj.Genre.GameGenreId > 0)
             {
                 try
                 {
-                    ngg = _ggr.GetById(obj.Genre.Id);
+                    ngg = _ggr.GetById(obj.Genre.GameGenreId);
                 }
                 catch (ArgumentOutOfRangeException)
                 {

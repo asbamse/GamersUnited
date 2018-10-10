@@ -39,11 +39,11 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             ProductCategory npc;
-            if(obj.Category.Id > 0)
+            if(obj.Category.ProductCategoryId > 0)
             {
                 try
                 {
-                    npc = _pcr.GetById(obj.Category.Id);
+                    npc = _pcr.GetById(obj.Category.ProductCategoryId);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -75,7 +75,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public Product GetById(int id)
         {
-            var item = _ctx.Product.FirstOrDefault(b => b.Id == id);
+            var item = _ctx.Product.FirstOrDefault(b => b.ProductId == id);
 
             if (item == null)
             {
@@ -87,7 +87,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public Product Remove(Product obj)
         {
-            var item = GetById(obj.Id);
+            var item = GetById(obj.ProductId);
 
             _ctx.Product.Remove(item);
             _ctx.SaveChanges();
@@ -115,11 +115,11 @@ namespace GamersUnited.Infrastructure.Data
             }
 
             ProductCategory npc;
-            if (obj.Category.Id > 0)
+            if (obj.Category.ProductCategoryId > 0)
             {
                 try
                 {
-                    npc = _pcr.GetById(obj.Category.Id);
+                    npc = _pcr.GetById(obj.Category.ProductCategoryId);
                 }
                 catch (ArgumentOutOfRangeException)
                 {

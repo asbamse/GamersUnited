@@ -6,7 +6,7 @@ namespace GamersUnited.Core.Entities
 {
     public class GameGenre
     {
-        public int Id { get; set; }
+        public int GameGenreId { get; set; }
         public string Name { get; set; }
     }
 }

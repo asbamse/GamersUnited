@@ -50,3 +50,18 @@
     color: white;
 
 }
+
+#page_product_description_container
+{
+  margin-left: 350px;
+  font-family: "roboto";
+  height: 400px;
+}
+
+#page_product_description_container p
+{
+  width: 80%;
+  font-size: 24px;
+  margin: auto;
+  margin-top: 25px;
+}

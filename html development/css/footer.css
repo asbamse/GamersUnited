@@ -1,9 +1,6 @@
 /* Css for the code involving the footer Area */
 footer
 {
-
-    background-color: #29323C;
-
     grid-area: footer;
 }
 

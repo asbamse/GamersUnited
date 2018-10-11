@@ -11,16 +11,16 @@ namespace GamersUnited.RestAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductCategoryController : ControllerBase
+    public class ProductCategoriesController : ControllerBase
     {
         private readonly IProductCategoryService _productCategoryService;
 
-        public ProductCategoryController(IProductCategoryService productCategoryService)
+        public ProductCategoriesController(IProductCategoryService productCategoryService)
         {
             _productCategoryService = productCategoryService;
         }
 
-        // GET: api/ProductCategory
+        // GET: api/ProductCategories
         [HttpGet]
         public ActionResult<IEnumerable<ProductCategory>> Get()
         {

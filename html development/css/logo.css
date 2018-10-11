@@ -1,0 +1,75 @@
+/*--------------------------------------------------------------------------------------------------------------- */
+#icon_settings
+{
+  color: #3498DB;
+  width: 68px; height: 68px;
+  text-align: center;
+  font-size: 45px;
+  transition: 1s;
+}
+
+#icon_settings:hover
+{
+  color: #E74C3C;
+}
+
+/*--------------------------------------------------------------------------------------------------------------- */
+#icon_help
+{
+  color:#3498DB;
+  width: 68px; height: 68px;
+  text-align: center;
+  font-size: 45px;
+  transition: 1s;
+}
+
+#icon_help:hover
+{
+  color:#E74C3C;
+}
+
+/*--------------------------------------------------------------------------------------------------------------- */
+#icon_user_profile
+{
+  color:#3498DB;
+  width: 68px; height: 68px;
+  text-align: center;
+  font-size: 45px;
+  transition: 1s;
+}
+
+#icon_user_profile:hover
+{
+  color: #E74C3C;
+}
+
+/*--------------------------------------------------------------------------------------------------------------- */
+#icon_cart
+{
+  color:#3498DB;
+  width: 68px; height: 68px;
+  text-align: center;
+  font-size: 45px;
+  transition: 1s;
+}
+
+#icon_cart:hover
+{
+    color: #E74C3C;
+}
+
+/*--------------------------------------------------------------------------------------------------------------- */
+#search_icon
+{
+  position: absolute;
+  top: 48px;
+
+  font-size: 25px;
+  color: #3498DB;
+  transition: 1s;
+}
+
+#search_icon:hover
+{
+  color: #E74C3C;
+}

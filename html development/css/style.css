@@ -19,6 +19,9 @@
 */
 @import url("space.css");
 
+/*
+*/
+@import url("cover.css");
 
 /* Initial setup of the page area.
   It's split into three areas. Header, Main and Footer.

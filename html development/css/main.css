@@ -1,0 +1,17 @@
+
+main
+{
+  height: 820px;
+}
+
+#area_main
+{
+
+}
+
+main
+{
+    background: yellow;
+
+    grid-area: main;
+}

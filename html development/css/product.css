@@ -58,6 +58,22 @@
   height: 400px;
 }
 
+#buybutton
+{
+  border: 0px;
+  background-color: #2980B9;
+  height: 40px;
+  width: 100px;
+  position: absolute;
+
+  right: 30px;
+  bottom:30px;
+
+  color: white;
+  font-family: "roboto";
+  font-size: 16px;
+}
+
 #page_product_description_container p
 {
   width: 80%;

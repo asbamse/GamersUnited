@@ -21,3 +21,24 @@ h3
   margin-left: 265px;
   margin-bottom: 15px;
 }
+
+
+
+.dark_gradient
+{
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#29323c+0,485563+100 */
+background: #29323c; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #29323c 0%, #485563 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #29323c 0%,#485563 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #29323c 0%,#485563 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29323c', endColorstr='#485563',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.light_gradient
+{
+  background: #ffffff;
+background: -moz-linear-gradient(-45deg, #ffffff 0%, #dcdcdc 100%);
+background: -webkit-linear-gradient(-45deg, #ffffff 0%,#dcdcdc 100%);
+background: linear-gradient(135deg, #ffffff 0%,#dcdcdc 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dcdcdc',GradientType=1 );
+}

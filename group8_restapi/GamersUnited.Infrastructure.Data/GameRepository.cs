@@ -124,7 +124,8 @@ namespace GamersUnited.Infrastructure.Data
             {
                 try
                 {
-                    np = _pr.GetById(obj.Product.ProductId);
+                    _pr.GetById(obj.Product.ProductId);
+                    np = _pr.Update(obj.Product.ProductId, obj.Product);
                 }
                 catch (ArgumentOutOfRangeException)
                 {

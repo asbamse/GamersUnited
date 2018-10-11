@@ -1,5 +1,6 @@
 $('#addForm').on('submit',function(e){
   e.preventDefault();
+  var gameId = $( "#gameDrop" ).val();
   var gameName = $( "#gameName" ).val();
   var gameCategoryDrop = $( "#gameCategoryDrop" ).val();
   var gameCategoryField = $( "#gameCategoryField" ).val();
@@ -12,6 +13,7 @@ $('#addForm').on('submit',function(e){
   var json = {
       "Product":
           {
+              "ProductId":gameId,
               "Name":gameName,
               "Price":gamePrice,
               "ImageUrl":gameImage,
@@ -46,8 +48,8 @@ $('#addForm').on('submit',function(e){
     }
 
   $.ajax({
-    url: "https://gamersunited.azurewebsites.net/api/games",
-    type: 'POST',
+    url: "https://gamersunited.azurewebsites.net/api/games/" + gameId,
+    type: 'PUT',
     data: JSON.stringify(json),
     processData: false,
     contentType: 'application/json',

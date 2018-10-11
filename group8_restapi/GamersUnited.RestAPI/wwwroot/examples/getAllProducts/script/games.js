@@ -37,7 +37,7 @@ function addGameRow(game) {
 function buildGameRow(game) {
     var ret =
         "<tr>" +
-        "<td>" + game.product.productId + "</td>" +
+        "<td>" + game.gameId + "</td>" +
         "<td>" + game.product.name + "</td>" +
         "<td>" + game.product.category.name + "</td>" +
         "<td>" + game.genre.name + "</td>" +

@@ -17,8 +17,9 @@ namespace GamersUnited.Infrastructure.Data.Context
 
         public GamersUnitedContext(DbContextOptions<GamersUnitedContext> options) : base(options)
         {
+            base.Database.Migrate();
         }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductCategory>()
@@ -64,7 +65,7 @@ namespace GamersUnited.Infrastructure.Data.Context
                 .HasOne<Sold>(s => s.Sold)
                 .WithMany()
                 .HasForeignKey(si => new {si.SoldId, si.ProductId})
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<SoldInvoiceRelation>()
                 .HasOne<Invoice>(i => i.Invoice)

@@ -1,6 +1,7 @@
 ﻿using GamersUnited.Core.DomainService;
 using GamersUnited.Core.Entities;
 using GamersUnited.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,7 +83,7 @@ namespace GamersUnited.Infrastructure.Data
 
         public IList<Game> GetAll()
         {
-            return _ctx.Game.ToList();
+            return _ctx.Game.Include(g => g.Product).ThenInclude(p => p.Category).Include(g => g.Genre).ToList();
         }
 
         public Game GetById(int id)

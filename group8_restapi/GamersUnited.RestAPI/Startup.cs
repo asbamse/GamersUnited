@@ -35,25 +35,6 @@ namespace GamersUnited.RestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add CORS
-            services.AddCors();
-
-            if (Environment.IsDevelopment())
-            {
-                // In-memory database:
-                services.AddDbContext<GamersUnitedContext>(opt => opt.UseInMemoryDatabase("InMemory: GamersUnitedContext").EnableSensitiveDataLogging());
-            }
-            else
-            {
-                // SQL Server on Azure:
-                services.AddDbContext<GamersUnitedContext>(opt =>
-                         opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
-            }
-
-            services.AddMvc().AddJsonOptions(options => {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            });
-
             services.AddScoped<IInvoiceService, InvoiceService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUserService, UserService>();
@@ -70,47 +51,48 @@ namespace GamersUnited.RestAPI
             services.AddScoped<IRepository<User>, UserRepository>();
             services.AddScoped<ILoginValidation, UserRepository>();
 
-            services.AddMvc();
+            if (Environment.IsDevelopment())
+            {
+                // In-memory database:
+                services.AddDbContext<GamersUnitedContext>(opt => opt.UseInMemoryDatabase("InMemory: GamersUnitedContext").EnableSensitiveDataLogging());
+            }
+            else
+            {
+                // SQL Server on Azure:
+                services.AddDbContext<GamersUnitedContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+            }
+
+            services.AddMvc().AddJsonOptions(options => {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // Add CORS
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // For convenience, I want detailed exception information always. However, this statement should
-            // be removed, when the application is released.
-            app.UseDeveloperExceptionPage();
 
-            if (env.IsDevelopment())
+            using (var scope = app.ApplicationServices.CreateScope())
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
+                var ctx = scope.ServiceProvider.GetService<GamersUnitedContext>();
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+
+                    app.UseCors(builder => builder.WithOrigins("https://localhost:63342").AllowAnyMethod());
+                }
+                else
+                {
+                    app.UseHsts();
+
+                    app.UseCors(builder => builder.WithOrigins("https://gamersunited.azurewebsites.net").AllowAnyMethod().AllowAnyHeader());
+                }
             }
 
             app.UseHttpsRedirection();
-
-            // Enable CORS (must precede app.UseMvc()):
-
-            // Allow any origin (not recommended, but sometimes necessary):
-            //app.UseCors(builder => builder.AllowAnyOrigin());
-
-            // Allow a specific origin:
-            //app.UseCors(builder => builder.WithOrigins("http://example.com"));
-
-            // Allow two origins:
-            //app.UseCors(builder => builder.WithOrigins("http://example.com", "http://www.contoso.com"));
-
-            // Allow PUT and DELETE http methods:
-            //app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod());
-
-            // Allow POST methods with non-standard request headers (for example
-            // "Content-Type: application/json"):
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-            // Allow PUT and DELETE http methods and credentials:
-            //app.UseCors(builder => builder.WithOrigins("http://example.com").AllowAnyMethod().AllowCredentials());
+            app.UseStaticFiles();
 
             app.UseMvc();
         }

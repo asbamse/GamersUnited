@@ -1,9 +1,42 @@
 $( document ).ready(listGames());
 
 function listGames() {
+    var $page = $_GET("page");
+    var $limit = $_GET("limit");
+    var $sortBy = $_GET("sortBy");
+    var $sortOrder = $_GET("sortOrder");
+
+    if($page == null)
+    {
+        $page = 1;
+    }
+
+    if($limit == null)
+    {
+        $limit = 1;
+    }
+
+    if($sortBy != null)
+    {
+        $sortBy = '&sortBy=' + $sortBy;
+    }
+    else
+    {
+        $sortBy = '';
+    }
+
+    if($sortOrder != null)
+    {
+        $sortOrder = '&sortOrder=' + $sortOrder;
+    }
+    else
+    {
+        $sortOrder = '';
+    }
+
     // Call Web API to get a list of post
     $.ajax({
-        url: 'https://gamersunited.azurewebsites.net/api/games',
+        url: 'https://gamersunited.azurewebsites.net/api/games/filtered?page=' + $page + '&limit=' + $limit + $sortBy + $sortOrder,
         type: 'GET',
         dataType: 'json',
         success: function (games) {
@@ -46,4 +79,19 @@ function buildGameRow(game) {
         "<td>" + game.product.description + "</td>" +
         "</tr>";
     return ret;
+}
+
+function $_GET(param) {
+    var vars = {};
+    window.location.href.replace( location.hash, '' ).replace(
+        /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+        function( m, key, value ) { // callback
+            vars[key] = value !== undefined ? value : '';
+        }
+    );
+
+    if ( param ) {
+        return vars[param] ? vars[param] : null;
+    }
+    return vars;
 }

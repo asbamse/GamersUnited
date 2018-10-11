@@ -34,8 +34,36 @@ namespace GamersUnited.RestAPI.Controllers
             }
         }
 
-        // GET: api/Games/5
-        [HttpGet("{id}")]
+        // GET: api/Games/filtered/
+        [HttpGet("filtered/")]
+        public ActionResult<IEnumerable<Game>> Get([FromHeader]PageProperty pageProperty)
+        {
+            try
+            {
+                return Ok(_gameService.GetPage(pageProperty).AsEnumerable());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // GET: api/Games/count/
+        [HttpGet("count/")]
+        public ActionResult<int> Get([FromHeader]Random rand)
+        {
+            try
+            {
+                return Ok(_gameService.Count());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // GET: api/Games/id/5
+        [HttpGet("id/{id}")]
         public ActionResult<Game> Get(int id)
         {
             try

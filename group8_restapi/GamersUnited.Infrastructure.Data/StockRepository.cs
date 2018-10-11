@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace GamersUnited.Infrastructure.Data
@@ -138,6 +139,46 @@ namespace GamersUnited.Infrastructure.Data
             _ctx.SaveChanges();
 
             return item;
+        }
+
+        public IList<Stock> GetPage(PageProperty pageProperty)
+        {
+            if (pageProperty == null)
+            {
+                return GetAll();
+            }
+
+            IQueryable<Stock> quaryStocks = _ctx.Stock;
+
+            if (pageProperty.SortBy != null)
+            {
+                PropertyInfo propertyInfo = typeof(Stock).GetProperty(pageProperty.SortBy, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+
+                if (propertyInfo == null)
+                {
+                    throw new ArgumentException($"Cannot sort by {pageProperty.SortBy} because it is not a property in Stock! Try another.");
+                }
+
+                if (pageProperty.SortOrder == null || pageProperty.SortOrder.ToLower().Equals("asc"))
+                {
+                    quaryStocks = quaryStocks.OrderBy(p => propertyInfo.GetValue(p, null));
+                }
+                else if (pageProperty.SortOrder.ToLower().Equals("desc"))
+                {
+                    quaryStocks = quaryStocks.OrderByDescending(p => propertyInfo.GetValue(p, null));
+                }
+                else
+                {
+                    throw new ArgumentException($"Sort order can only be 'asc' or 'desc'! Not {pageProperty.SortOrder}.");
+                }
+            }
+
+            List<Stock> stocks = quaryStocks
+                .Skip((pageProperty.Page - 1) * pageProperty.Limit)
+                .Take(pageProperty.Limit)
+                .ToList();
+
+            return stocks;
         }
     }
 }

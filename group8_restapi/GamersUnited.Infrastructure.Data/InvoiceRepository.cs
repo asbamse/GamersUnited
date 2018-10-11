@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace GamersUnited.Infrastructure.Data
@@ -122,6 +123,46 @@ namespace GamersUnited.Infrastructure.Data
             _ctx.SaveChanges();
 
             return _ctx.Invoice.Include(i => i.Products).Include(i => i.Customer).FirstOrDefault(i => i.InvoiceId == obj.InvoiceId);
+        }
+
+        public IList<Invoice> GetPage(PageProperty pageProperty)
+        {
+            if (pageProperty == null)
+            {
+                return GetAll();
+            }
+
+            IQueryable<Invoice> quaryInvoices = _ctx.Invoice;
+
+            if (pageProperty.SortBy != null)
+            {
+                PropertyInfo propertyInfo = typeof(Invoice).GetProperty(pageProperty.SortBy, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+
+                if (propertyInfo == null)
+                {
+                    throw new ArgumentException($"Cannot sort by {pageProperty.SortBy} because it is not a property in Invoice! Try another.");
+                }
+
+                if (pageProperty.SortOrder == null || pageProperty.SortOrder.ToLower().Equals("asc"))
+                {
+                    quaryInvoices = quaryInvoices.OrderBy(p => propertyInfo.GetValue(p, null));
+                }
+                else if (pageProperty.SortOrder.ToLower().Equals("desc"))
+                {
+                    quaryInvoices = quaryInvoices.OrderByDescending(p => propertyInfo.GetValue(p, null));
+                }
+                else
+                {
+                    throw new ArgumentException($"Sort order can only be 'asc' or 'desc'! Not {pageProperty.SortOrder}.");
+                }
+            }
+
+            List<Invoice> users = quaryInvoices
+                .Skip((pageProperty.Page - 1) * pageProperty.Limit)
+                .Take(pageProperty.Limit)
+                .ToList();
+
+            return users;
         }
     }
 }

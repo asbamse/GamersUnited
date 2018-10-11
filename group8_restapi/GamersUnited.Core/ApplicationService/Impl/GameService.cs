@@ -41,5 +41,15 @@ namespace GamersUnited.Core.ApplicationService.Impl
         {
             return _gameRepo.GetById(id);
         }
+
+        public List<Game> GetPage(PageProperty pageProperty)
+        {
+            return _gameRepo.GetPage(pageProperty).ToList();
+        }
+
+        public int Count()
+        {
+            return _gameRepo.Count();
+        }
     }
 }

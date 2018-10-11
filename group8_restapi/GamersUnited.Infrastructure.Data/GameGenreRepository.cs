@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using GamersUnited.Core.DomainService;
 using GamersUnited.Core.Entities;
@@ -78,6 +79,46 @@ namespace GamersUnited.Infrastructure.Data
             _ctx.SaveChanges();
 
             return item;
+        }
+
+        public IList<GameGenre> GetPage(PageProperty pageProperty)
+        {
+            if (pageProperty == null)
+            {
+                return GetAll();
+            }
+
+            IQueryable<GameGenre> quaryGameGenres = _ctx.GameGenre;
+
+            if (pageProperty.SortBy != null)
+            {
+                PropertyInfo propertyInfo = typeof(GameGenre).GetProperty(pageProperty.SortBy, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+
+                if (propertyInfo == null)
+                {
+                    throw new ArgumentException($"Cannot sort by {pageProperty.SortBy} because it is not a property in GameGenre! Try another.");
+                }
+
+                if (pageProperty.SortOrder == null || pageProperty.SortOrder.ToLower().Equals("asc"))
+                {
+                    quaryGameGenres = quaryGameGenres.OrderBy(p => propertyInfo.GetValue(p, null));
+                }
+                else if (pageProperty.SortOrder.ToLower().Equals("desc"))
+                {
+                    quaryGameGenres = quaryGameGenres.OrderByDescending(p => propertyInfo.GetValue(p, null));
+                }
+                else
+                {
+                    throw new ArgumentException($"Sort order can only be 'asc' or 'desc'! Not {pageProperty.SortOrder}.");
+                }
+            }
+
+            List<GameGenre> users = quaryGameGenres
+                .Skip((pageProperty.Page - 1) * pageProperty.Limit)
+                .Take(pageProperty.Limit)
+                .ToList();
+
+            return users;
         }
     }
 }

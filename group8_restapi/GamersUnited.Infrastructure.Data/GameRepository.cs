@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace GamersUnited.Infrastructure.Data
@@ -162,6 +163,48 @@ namespace GamersUnited.Infrastructure.Data
             _ctx.SaveChanges();
 
             return item;
+        }
+
+        public IList<Game> GetPage(PageProperty pageProperty)
+        {
+            if (pageProperty == null)
+            {
+                return GetAll();
+            }
+
+            IQueryable<Game> quaryGames = _ctx.Game;
+
+            if (pageProperty.SortBy != null)
+            {
+                PropertyInfo propertyInfo = typeof(Game).GetProperty(pageProperty.SortBy, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+
+                if (propertyInfo == null)
+                {
+                    throw new ArgumentException($"Cannot sort by {pageProperty.SortBy} because it is not a property in Game! Try another.");
+                }
+
+                if (pageProperty.SortOrder == null || pageProperty.SortOrder.ToLower().Equals("asc"))
+                {
+                    quaryGames = quaryGames.OrderBy(p => propertyInfo.GetValue(p, null));
+                }
+                else if (pageProperty.SortOrder.ToLower().Equals("desc"))
+                {
+                    quaryGames = quaryGames.OrderByDescending(p => propertyInfo.GetValue(p, null));
+                }
+                else
+                {
+                    throw new ArgumentException($"Sort order can only be 'asc' or 'desc'! Not {pageProperty.SortOrder}.");
+                }
+            }
+
+            List<Game> users = quaryGames
+                .Include(g => g.Product).ThenInclude(p => p.Category)
+                .Include(g => g.Genre)
+                .Skip((pageProperty.Page - 1) * pageProperty.Limit)
+                .Take(pageProperty.Limit)
+                .ToList();
+
+            return users;
         }
     }
 }

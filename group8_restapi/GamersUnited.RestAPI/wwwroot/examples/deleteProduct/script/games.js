@@ -1,6 +1,6 @@
 $('#deleteForm').on('submit',function(e){
   e.preventDefault();
-  var gameId = $( "#gameId" ).val();
+  var gameId = $( "#deleteGameId" ).val();
 
   $.ajax({
     url: "https://gamersunited.azurewebsites.net/api/games/" + gameId,
@@ -8,7 +8,7 @@ $('#deleteForm').on('submit',function(e){
     processData: false,
     contentType: 'application/json',
     success: function (comments) {
-      console.log("Success");
+        alert("Success: " + comments);
     },
     error: function (request, message, error) {
       handleException(request, message, error);

@@ -1,13 +1,13 @@
-$( document ).ready(fillGameGenreDropDown());
+$( document ).ready(ufillGameGenreDropDown());
 
-function fillGameGenreDropDown() {
+function ufillGameGenreDropDown() {
     // Call Web API to get a list of post
     $.ajax({
         url: 'https://gamersunited.azurewebsites.net/api/gameGenres',
         type: 'GET',
         dataType: 'json',
         success: function (gameGenres) {
-            onGetGameGenreSuccess(gameGenres);
+            uonGetGameGenreSuccess(gameGenres);
         },
         error: function (request, message, error) {
             handleException(request, message, error);
@@ -15,21 +15,21 @@ function fillGameGenreDropDown() {
     });
 }
 
-function onGetGameGenreSuccess(gameGenres) {
+function uonGetGameGenreSuccess(gameGenres) {
     // Iterate over the collection of data
     $.each(gameGenres, function (index, gameGenre) {
         // Add a row to the post table
-        addGameGenreOption(gameGenre);
+        uaddGameGenreOption(gameGenre);
     });
 }
 
-function addGameGenreOption(gameGenre) {
+function uaddGameGenreOption(gameGenre) {
     // Append row to <table>
-    $("#gameGenreDrop").append(
-        buildGameGenreOption(gameGenre));
+    $("#updateGameGenreDrop").append(
+        ubuildGameGenreOption(gameGenre));
 }
 
-function buildGameGenreOption(gameGenre) {
+function ubuildGameGenreOption(gameGenre) {
     var ret =
         "<option value='" + gameGenre.gameGenreId + "'>" + gameGenre.name + "</option>";
     return ret;

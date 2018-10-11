@@ -1,13 +1,13 @@
-$( document ).ready(fillGameIdDropDown());
+$( document ).ready(dfillGameIdDropDown());
 
-function fillGameIdDropDown() {
+function dfillGameIdDropDown() {
     // Call Web API to get a list of post
     $.ajax({
         url: 'https://gamersunited.azurewebsites.net/api/games',
         type: 'GET',
         dataType: 'json',
         success: function (games) {
-            onGetGameIdSuccess(games);
+            donGetGameIdSuccess(games);
         },
         error: function (request, message, error) {
             handleException(request, message, error);
@@ -15,21 +15,21 @@ function fillGameIdDropDown() {
     });
 }
 
-function onGetGameIdSuccess(games) {
+function donGetGameIdSuccess(games) {
     // Iterate over the collection of data
     $.each(games, function (index, game) {
         // Add a row to the post table
-        addGameIdOption(game);
+        daddGameIdOption(game);
     });
 }
 
-function addGameIdOption(game) {
+function daddGameIdOption(game) {
     // Append row to <table>
-    $("#gameId").append(
-        buildGameIdOption(game));
+    $("#deleteGameId").append(
+        dbuildGameIdOption(game));
 }
 
-function buildGameIdOption(game) {
+function dbuildGameIdOption(game) {
     var ret =
         "<option value='" + game.gameId + "'>" + game.gameId + "</option>";
     return ret;

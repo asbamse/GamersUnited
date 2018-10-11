@@ -89,7 +89,10 @@ namespace GamersUnited.Infrastructure.Data
 
         public Game GetById(int id)
         {
-            var item = _ctx.Game.FirstOrDefault(b => b.GameId == id);
+            var item = _ctx.Game
+                .Include(g => g.Product).ThenInclude(p => p.Category)
+                .Include(g => g.Genre)
+                .FirstOrDefault(b => b.GameId == id);
 
             if (item == null)
             {

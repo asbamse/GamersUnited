@@ -1,14 +1,14 @@
-$('#addForm').on('submit',function(e){
+$('#updateForm').on('submit',function(e){
   e.preventDefault();
-  var gameId = $( "#gameDrop" ).val();
-  var gameName = $( "#gameName" ).val();
-  var gameCategoryDrop = $( "#gameCategoryDrop" ).val();
-  var gameCategoryField = $( "#gameCategoryField" ).val();
-  var gameGenre = $( "#gameGenre" ).val();
-  var gameGenreDrop = $("#gameGenreDrop").val();
-  var gamePrice = $( "#gamePrice" ).val();
-  var gameImage = $( "#gameImage" ).val();
-  var gameDescription = $( "#gameDescription" ).val();
+  var gameId = $( "#updateGameDrop" ).val();
+  var gameName = $( "#updateGameName" ).val();
+  var gameCategoryDrop = $( "#updateGameCategoryDrop" ).val();
+  var gameCategoryField = $( "#updateGameCategoryField" ).val();
+  var gameGenre = $( "#updateGameGenre" ).val();
+  var gameGenreDrop = $("#updateGameGenreDrop").val();
+  var gamePrice = $( "#updateGamePrice" ).val();
+  var gameImage = $( "#updateGameImage" ).val();
+  var gameDescription = $( "#updateGameDescription" ).val();
 
   var json = {
       "Product":
@@ -54,7 +54,7 @@ $('#addForm').on('submit',function(e){
     processData: false,
     contentType: 'application/json',
     success: function (comments) {
-      console.log("Success");
+      alert("Success: " + comments);
     },
     error: function (request, message, error) {
       handleException(request, message, error);

@@ -1,8 +1,22 @@
+/*
+  Standard Base CSS
+*/
+/*
+  General css rules for the header area
+*/
 @import url("header.css");
+/*
+  General Css rules for the footer area
+*/
 @import url("footer.css");
+/*
+  General Css rules for the main Area
+*/
 @import url("main.css");
 
-
+/* Initial setup of the page area.
+  It's split into three areas. Header, Main and Footer.
+*/
 #page_setup
 {
     display: grid;
@@ -11,10 +25,10 @@
     margin: 0px;
 
     grid-template-columns: auto;
-    grid-template-rows: auto ;
+    grid-template-rows: auto auto auto;
     grid-gap: 25px;
 
-        background-color: #29323C;
+    background-color: #29323C;
 
     grid-template-areas: "head"
                          "main"

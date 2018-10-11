@@ -1,0 +1,8 @@
+@import url("colors.css");
+
+#product-nav
+{
+  height: 75px;
+  width: 100%;
+  margin-bottom: 0px;
+}

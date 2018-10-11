@@ -1,7 +1,15 @@
+/*
+  General css rules for the header area
+*/
 @import url("header.css");
+/*
+  General Css rules for the footer area
+*/
 @import url("footer.css");
+/*
+  General Css rules for the main Area
+*/
 @import url("main.css");
-
 
 #page_setup
 {

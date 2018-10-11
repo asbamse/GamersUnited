@@ -1,0 +1,52 @@
+#page_product
+{
+  width: 1443px;
+
+  margin-top: 75px;
+
+  display: grid;
+
+  grid-gap: 80px;
+  grid-template-areas:"page_header" "page_cont";
+
+  grid-template-columns: auto;
+  grid-template-rows: 158px auto;
+}
+
+#page_header_container
+{
+  grid-area: "page_header";
+}
+
+#page_content
+{
+  position: relative;
+  background-color: white;
+  grid-area: "page_cont";
+}
+
+#page_product_image
+{
+  margin-left: 30px;
+  position: absolute;
+  top: -160px;
+}
+
+#product_page_title
+{
+  margin-left: 460px;
+  margin-top: 70px;
+  font-family: "questrial";
+  font-size: 55px;
+  color: white;
+  margin-bottom: 0px;
+}
+
+#product_page_category
+{
+    margin-left: 460px;
+    font-size: 30px;
+    font-family: "questrial";
+    color: white;
+
+}

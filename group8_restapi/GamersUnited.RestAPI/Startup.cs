@@ -40,6 +40,7 @@ namespace GamersUnited.RestAPI
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IGameService, GameService>();
+            services.AddScoped<IGameGenreService, GameGenreService>();
             services.AddScoped<IStockService, StockService>();
             services.AddScoped<IRepository<Game>, GameRepository>();
             services.AddScoped<IRepository<GameGenre>, GameGenreRepository>();

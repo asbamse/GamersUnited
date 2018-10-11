@@ -4,6 +4,7 @@ $('#addForm').on('submit',function(e){
   var gameCategoryDrop = $( "#gameCategoryDrop" ).val();
   var gameCategoryField = $( "#gameCategoryField" ).val();
   var gameGenre = $( "#gameGenre" ).val();
+  var gameGenreDrop = $("#gameGenreDrop").val();
   var gamePrice = $( "#gamePrice" ).val();
   var gameImage = $( "#gameImage" ).val();
   var gameDescription = $( "#gameDescription" ).val();
@@ -12,15 +13,13 @@ $('#addForm').on('submit',function(e){
       "Product":
           {
               "Name":gameName,
-              "Category":{},
+              // "Category":{},
               "Price":gamePrice,
               "ImageUrl":gameImage,
               "Description":gameDescription
           },
-      "Genre":
-          {
-              "Name":gameGenre
-          }
+     // "Genre":
+          //{}
   };
 
   if(gameCategoryField.length > 0)
@@ -35,6 +34,19 @@ $('#addForm').on('submit',function(e){
           "ProductCategoryId":gameCategoryDrop
       };
   }
+
+    if(gameGenre.length > 0)
+    {
+        json.Genre = {
+            "Name":gameGenre
+        };
+    }
+    else
+    {
+        json.Genre = {
+            "GameGenreId":gameGenreDrop
+        };
+    }
 
   $.ajax({
     url: "https://gamersunited.azurewebsites.net/api/games",

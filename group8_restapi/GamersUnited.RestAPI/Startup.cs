@@ -36,6 +36,7 @@ namespace GamersUnited.RestAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<ProductCategoryService, ProductCategoryService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IGameService, GameService>();

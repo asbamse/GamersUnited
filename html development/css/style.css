@@ -11,6 +11,9 @@
 */
 @import url("main.css");
 
+/* Initial setup of the page area.
+  It's split into three areas. Header, Main and Footer
+*/
 #page_setup
 {
     display: grid;

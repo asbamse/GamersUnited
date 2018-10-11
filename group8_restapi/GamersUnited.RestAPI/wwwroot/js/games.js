@@ -88,7 +88,7 @@ function buildGameRow(game) {
             "        <!--- ////////////////////////////////// End of Column ////////////////////////////////// --->\n" +
             "\n" +
             "<!--- ////////////////////////////////// Space ////////////////////////////////// --->\n" +
-            "              <div class=\"product-column-space-white\">\n" +
+            "              <div class=\"product-column-space-white light_gradient shadow\">\n" +
             "              </div>\n" +
             "              <!--- ////////////////////////////////// End of Space ////////////////////////////////// --->");
     }
@@ -107,7 +107,7 @@ function buildGameRow(game) {
             "        <div class=\"product-listed-image\">\n" +
             "        <img src=\"" + game.product.imageUrl + "\" alt=\"\">\n" +
             "        </div>\n" +
-            "        <div class=\"product-listed-cover\">\n" +
+            "        <div class=\"product-listed-cover light_gradient shadow\">\n" +
             "\n" +
             "        <!-- Product-Title -->\n" +
             "        <p class=\"product-listed-title\">" + game.product.name + "</p>\n" +
@@ -131,7 +131,7 @@ function buildGameRow(game) {
             "        <div class=\"product-listed-image\">\n" +
             "        <img src=\"" + game.product.imageUrl + "\" alt=\"\">\n" +
             "        </div>\n" +
-            "        <div class=\"product-listed-cover\">\n" +
+            "        <div class=\"product-listed-cover light_gradient shadow\">\n" +
             "\n" +
             "        <!-- Product-Title -->\n" +
             "        <p class=\"product-listed-title\">" + game.product.name + "</p>\n" +

@@ -17,7 +17,6 @@ namespace GamersUnited.Infrastructure.Data.Context
 
         public GamersUnitedContext(DbContextOptions<GamersUnitedContext> options) : base(options)
         {
-            base.Database.Migrate();
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)

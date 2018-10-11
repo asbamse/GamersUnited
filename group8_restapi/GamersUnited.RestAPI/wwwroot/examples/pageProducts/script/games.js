@@ -1,73 +1,58 @@
-var page;
-var limit;
-var isBlocked;
-
-$( document ).ready(function() {
-    page = 1;
-    limit = 2;
-    isBlocked = false;
-    listGames();
-});
-
-$(window).scroll(function() {
-    if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        if(!isBlocked) {
-            listGames();
-        }
-    }
-});
-
-$("#loadMore").click( function() {
-        if(!isBlocked) {
-            listGames();
-        }
-    }
-);
+$( document ).ready(listGames());
 
 function listGames() {
-    isBlocked = true;
+    var $page = $_GET("page");
+    var $limit = $_GET("limit");
+    var $sortBy = $_GET("sortBy");
+    var $sortOrder = $_GET("sortOrder");
+
+    if($page == null)
+    {
+        $page = 1;
+    }
+
+    if($limit == null)
+    {
+        $limit = 1;
+    }
+
+    if($sortBy != null)
+    {
+        $sortBy = '&sortBy=' + $sortBy;
+    }
+    else
+    {
+        $sortBy = '';
+    }
+
+    if($sortOrder != null)
+    {
+        $sortOrder = '&sortOrder=' + $sortOrder;
+    }
+    else
+    {
+        $sortOrder = '';
+    }
+
     // Call Web API to get a list of post
     $.ajax({
-        url: 'https://gamersunited.azurewebsites.net/api/games/filtered?page=' + page + '&limit=' + limit,
+        url: 'https://gamersunited.azurewebsites.net/api/games/filtered?page=' + $page + '&limit=' + $limit + $sortBy + $sortOrder,
         type: 'GET',
         dataType: 'json',
         success: function (games) {
             onGetGamesSuccess(games);
-            getCount();
         },
         error: function (request, message, error) {
             handleException(request, message, error);
         }
     });
-}
-
-function getCount() {
-    // Call Web API to get a list of post
-    $.ajax({
-        url: 'https://gamersunited.azurewebsites.net/api/games/count',
-        type: 'GET',
-        dataType: 'json',
-        success: function (gameCount) {
-            removeButton(gameCount);
-            page++;
-            isBlocked = false;
-        },
-        error: function (request, message, error) {
-            handleException(request, message, error);
-        }
-    });
-}
-
-function removeButton(count) {
-    if(count < (page * limit)) {
-        $("#loadMore").remove();
-    }
 }
 
 function onGetGamesSuccess(games) {
     if ($("#gamesTable tbody").length == 0) {
         $("#gamesTable").append("<tbody></tbody>");
     }
+    $("#gamesTable tbody").empty();
     // Iterate over the collection of data
     $.each(games, function (index, game) {
         // Add a row to the post table

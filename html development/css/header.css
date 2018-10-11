@@ -1,0 +1,95 @@
+@import url("logo.css");
+
+header
+{
+    background: #ECF0F1;
+    grid-area: head;
+}
+
+#area_header
+{
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  grid-template-rows: auto;
+  grid-gap: 10px;
+
+  grid-template-areas: "area_header_logo area_header_logo area_header_search area_header_search area_header_search area_header_search area_header_search_button area_header_nav area_header_nav area_header_nav";
+
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+#area_header_logo_image_area
+{
+  width: 300px;
+  height: 78px;
+
+  background: white;
+}
+
+#area_header_logo
+{
+  grid-area: area_header_logo;
+}
+
+#area_header_search
+{
+  grid-area: area_header_search;
+  padding-left: 25px;
+  padding-right: 25px;
+
+}
+
+#area_header_search_button
+{
+    padding-left: 20px;
+    padding-right: 20px;
+
+    grid-area: area_header_search_button;
+}
+
+#area_header_search_box
+{
+font-size: 20px;
+
+  transition: 1s;
+  margin-top: 32px;
+  padding-left: 30px;
+
+  width: 100%;
+  height: 36px;
+
+  background-color: transparent;
+
+  border: 0px;
+  border-bottom: 2px solid #3498DB;
+}
+
+#area_header_search_box:hover
+{
+  border-bottom:2px solid #E74C3C;
+}
+
+
+#area_header_nav
+{
+    grid-area: area_header_nav;
+}
+
+.area_header_nav_logo
+{
+  display: inline-block;
+  margin-right: 25px;
+}
+
+#area_header_nav
+{
+
+}
+
+#area_header_nav div
+{
+  float: right;
+}
